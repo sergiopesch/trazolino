@@ -3,7 +3,10 @@ import { auditAccessibility } from './accessibility-helpers.js';
 
 test('the optional signature respects reduced motion and returns focus without loading a lesson', async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  const response = await page.goto('/');
+  const imagePolicy = response.headers()['content-security-policy'].split(';')
+    .map(directive => directive.trim()).find(directive => directive.startsWith('img-src '));
+  expect(imagePolicy).toBe("img-src 'self' data:");
   const opener = page.getByRole('button', { name: 'Watch our signature come to life', exact: true });
   await opener.click();
   const dialog = page.getByRole('dialog', { name: 'Trazolino', exact: true });

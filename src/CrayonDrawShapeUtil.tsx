@@ -1,6 +1,8 @@
-import type { Editor, SvgExportContext, TLDrawShape, TLShapeUtilCanvasSvgDef } from "tldraw";
+import type { Editor, SvgExportContext, TLDrawShape } from "tldraw";
 
-import { ArrowShapeUtil, DefaultFontStyle, DrawShapeUtil, GeoShapeUtil, useEditor, useValue } from "tldraw";
+import { useEditor, useValue } from "tldraw";
+import { NoHatchDrawShapeUtil } from "./NoHatchShapeUtils.ts";
+export { NoHatchGeoShapeUtil, NoHatchArrowShapeUtil } from "./NoHatchShapeUtils.ts";
 import { CRAYON_GRAIN_SIZE, crayonGrainHoles, crayonPaintIds } from "./crayon-grain.js";
 import { nativeAppearanceDisplayValues, readCrayonAppearance } from "./crayon-appearance.js";
 
@@ -50,30 +52,11 @@ function CanvasGrainDefinitions() {
   </>;
 }
 
-// The read-only lessons use solid/no fill, not the SDK's bitmap hatch fill.
-// DefaultCanvas collects definitions for every registered shape utility even
-// when a shape type is unused, so filter only that shared definition from all
-// three built-in utilities which register it. Other SDK definitions are kept.
-const SDK_HATCH_KEY = `${DefaultFontStyle.id}:pattern`;
-const withoutUnusedHatch = (defs: TLShapeUtilCanvasSvgDef[]) => defs.filter(({ key }) => key !== SDK_HATCH_KEY);
-
-export class NoHatchGeoShapeUtil extends GeoShapeUtil {
-  override getCanvasSvgDefs() {
-    return withoutUnusedHatch(super.getCanvasSvgDefs());
-  }
-}
-
-export class NoHatchArrowShapeUtil extends ArrowShapeUtil {
-  override getCanvasSvgDefs() {
-    return withoutUnusedHatch(super.getCanvasSvgDefs());
-  }
-}
-
 // Official patterns/masks extension; native draw geometry, pressure, component,
 // bounds, migrations and licensing are inherited without replacement.
 // https://tldraw.dev/reference/editor/ShapeUtil#getCanvasSvgDefs
 // https://tldraw.dev/reference/editor/SvgExportContext#addExportDef
-export class CrayonDrawShapeUtil extends DrawShapeUtil {
+export class CrayonDrawShapeUtil extends NoHatchDrawShapeUtil {
   constructor(editor: Editor) {
     super(editor);
     this.options = {
@@ -83,7 +66,7 @@ export class CrayonDrawShapeUtil extends DrawShapeUtil {
   }
 
   override getCanvasSvgDefs() {
-    return [...withoutUnusedHatch(super.getCanvasSvgDefs()), {
+    return [...super.getCanvasSvgDefs(), {
       key: "little-line-crayon-paper", component: CanvasGrainDefinitions,
     }];
   }

@@ -8,7 +8,7 @@ The approved Trazolino signature is the primary mark on home, catalogue, prepara
 
 Browser icons use the approved T with pencil yellow `#F3C33D`, eraser border `#D99282`, and graphite `#292723`. The SVG favicon, 32px PNG fallback and 180px touch icon share the geometry. The 16/32/48px optical review retained the exact T.
 
-`src/signature` contains the approved twelve pressure-aware gestures and motion score. The optional home player loads the real read-only tldraw renderer on request, uses the existing licence configuration, respects reduced motion, and offers pause, still view and replay. It never gates activity selection or loops. The static signature is immediate, and a failed optional animation falls back to it. No-key production builds still exclude lesson/SDK JavaScript.
+`src/signature` contains the approved twelve pressure-aware gestures and motion score. The optional home player loads the real read-only tldraw renderer on request, uses the existing licence configuration, respects reduced motion, and offers pause, still view and replay. It never gates activity selection or loops. The static signature is immediate, and a failed optional animation falls back to it. No-key production builds still exclude lesson/SDK JavaScript. Both authored canvases share `NoHatchShapeUtils`: unused SDK bitmap hatch definitions are excluded for draw, geometry and arrow utilities, while native geometry and vector pencil/crayon paint remain. Local and production image policies both reject blob images, so the browser suite catches accidental hatch registration before release.
 
 ## Typography
 
