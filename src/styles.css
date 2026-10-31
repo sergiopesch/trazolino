@@ -1,36 +1,8 @@
+@import "./palette.css";
+
 :root {
   font-family: Nunito, ui-rounded, system-ui, sans-serif;
   font-synthesis: none;
-  /* Reading surfaces, independent of the control's priority. */
-  --ink: #17202f;
-  --muted: #58616f;
-  --paper: #fffefa;
-  --surface: #ffffff;
-  --surface-soft: #faf9f5;
-  --line: #e5e6e9;
-  --control-line: #7b8797;
-  /* Pencil gold is reserved for primary actions, with a visible ochre edge. */
-  --action: #f5cf60;
-  --action-hover: #edc24c;
-  --action-active: #e4b63a;
-  --action-line: #9a6b00;
-  --hover: #fff8e5;
-  --active: #fff0bf;
-  /* Blue communicates selection, on states, progress and links. */
-  --selection: #204bd8;
-  --selection-hover: #153bb7;
-  --selection-active: #10309a;
-  --selection-soft: #eef2ff;
-  --selection-soft-hover: #e2e9ff;
-  --selection-soft-active: #d4dfff;
-  --progress-track: #dce3f5;
-  --note: #fff4cc;
-  --note-line: #d9be69;
-  --disabled-ink: #65737c;
-  --disabled-surface: #e8ecef;
-  --focus: #ad3e25;
-  --error: #99352a;
-  --error-surface: #fff1ee;
   color: var(--ink);
   background: var(--paper);
 }
@@ -251,7 +223,7 @@ h2:focus {
   border-radius: 20px;
   width: 100%;
   text-align: left;
-  box-shadow: 0 8px 30px #304b3507;
+  box-shadow: 0 8px 30px var(--shadow-faint);
 }
 .lesson-preview:not(:disabled):hover {
   background: var(--hover);
@@ -344,7 +316,7 @@ h2:focus {
   border: 1px solid var(--line);
   border-radius: 18px;
   background: var(--surface);
-  box-shadow: 0 2px 8px #26333c05;
+  box-shadow: 0 2px 8px var(--shadow-faint);
 }
 .setup-progress {
   margin-bottom: 24px;
@@ -586,7 +558,7 @@ h2:focus {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 16px;
-  box-shadow: 0 2px 8px #26333c05;
+  box-shadow: 0 2px 8px var(--shadow-faint);
   overflow: hidden;
 }
 .instruction {
@@ -688,6 +660,9 @@ h2:focus {
   height: 100%;
   position: absolute;
   inset: 0;
+}
+.demonstration-board .tl-background {
+  background: var(--paper);
 }
 .board-status {
   display: flex;
@@ -845,11 +820,11 @@ h2:focus {
   max-height: calc(100dvh - 28px);
   overflow-y: auto;
   overscroll-behavior: contain;
-  box-shadow: 0 16px 80px #182d4030;
+  box-shadow: 0 16px 80px var(--shadow-raised);
   font-size: 15px;
 }
 .modal::backdrop {
-  background: #24374666;
+  background: var(--backdrop);
   backdrop-filter: blur(4px);
 }
 .modal-heading {
@@ -987,7 +962,7 @@ h2:focus {
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--control-line);
-  box-shadow: 0 1px 3px #223c5025;
+  box-shadow: 0 1px 3px var(--shadow);
 }
 .switch.on {
   background: var(--selection);
@@ -1119,7 +1094,7 @@ h2:focus {
   padding: 14px 18px;
   border: 1px solid var(--note-line);
   border-radius: 12px;
-  box-shadow: 0 6px 30px #0002;
+  box-shadow: 0 6px 30px var(--shadow);
   background: var(--note);
   font-size: 14px;
 }

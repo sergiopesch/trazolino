@@ -18,6 +18,10 @@ export function SignatureWelcome() {
       <SignatureBoundary><Suspense fallback={<img className="signature-still" src="/brand/signature.svg" alt="Trazolino" width="700" height="230" />}>
         <SignaturePlayer />
       </Suspense></SignatureBoundary>
+      <footer className="signature-credit">
+        <a href="https://tldraw.com" target="_blank" rel="noopener noreferrer">{t("With thanks to tldraw")}</a>
+        <p>{t("tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.")}</p>
+      </footer>
     </Modal>}
   </div>;
 }

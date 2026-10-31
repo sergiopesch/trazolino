@@ -376,7 +376,7 @@ export default function DemonstrationBoard({
         position: "absolute",
         inset: 0,
         overflow: "hidden",
-        background: "#fff",
+        background: "var(--paper)",
       }}
     >
       <Tldraw

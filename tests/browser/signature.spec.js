@@ -13,6 +13,8 @@ test('the optional signature respects reduced motion and returns focus without l
   await expect(dialog.locator('.tl-container')).toBeVisible();
   await expect.poll(() => dialog.locator('[data-shape-type="draw"]').count()).toBeGreaterThan(0);
   await expect(dialog.locator('.signature-controls')).toHaveCount(0);
+  await expect(dialog.getByRole('link', { name: 'With thanks to tldraw', exact: true })).toHaveAttribute('href', 'https://tldraw.com');
+  await expect(dialog.getByText('tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.', { exact: true })).toBeVisible();
   await expect(page.locator('.demonstration-board')).toHaveCount(0);
   await expect.poll(() => audioSilent(page)).toBe(true);
   await auditAccessibility(page, testInfo, 'signature-reduced-motion');

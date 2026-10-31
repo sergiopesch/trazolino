@@ -73,7 +73,7 @@
   height: auto;
   border: 1px solid var(--line);
   border-radius: 16px;
-  box-shadow: 0 12px 32px #223c500a;
+  box-shadow: 0 12px 32px var(--shadow-soft);
 }
 .licence-review figcaption {
   color: var(--muted);

@@ -1,16 +1,17 @@
+@import "./palette.css";
 @import "@fontsource/nunito/latin-400.css";
 @import "@fontsource/nunito/latin-700.css";
 
 :root {
   font-family: Nunito, ui-rounded, system-ui, sans-serif;
   font-synthesis: none;
-  color: #17202f;
-  background: #fffefa;
+  color: var(--ink);
+  background: var(--paper);
 }
 * { box-sizing: border-box; }
 body { margin: 0; }
-a { color: #204bd8; text-underline-offset: 4px; }
-a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
+a { color: var(--selection); text-underline-offset: 4px; }
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; }
 .about-header {
   max-width: 1440px;
   margin: auto;
@@ -36,14 +37,14 @@ a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
   align-items: center;
   min-height: 44px;
   padding: 8px 16px;
-  border: 1px solid #e5e6e9;
+  border: 1px solid var(--line);
   border-radius: 999px;
   color: inherit;
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
 }
-.about-back:hover, .about-personal:hover { background: #fff8e5; }
+.about-back:hover, .about-personal:hover { background: var(--hover); }
 .about-page {
   display: grid;
   grid-template-columns: clamp(180px, 22vw, 240px) minmax(0, 1fr);
@@ -55,15 +56,15 @@ a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
 }
 .about-portrait { display: block; width: 100%; height: auto; border-radius: 24px; }
 .about-story h1 { margin: 0 0 20px; font-size: clamp(38px, 5vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -1.8px; }
-.about-story h1 span { text-decoration: underline; text-decoration-color: #f5cf60; text-decoration-thickness: .13em; text-underline-offset: .06em; text-decoration-skip-ink: none; }
-.about-story p { margin: 0 0 20px; font-size: 18px; line-height: 1.65; color: #58616f; }
-.about-story .about-intro { font-size: 23px; color: #17202f; line-height: 1.45; }
+.about-story h1 span { text-decoration: underline; text-decoration-color: var(--action); text-decoration-thickness: .13em; text-underline-offset: .06em; text-decoration-skip-ink: none; }
+.about-story p { margin: 0 0 20px; font-size: 18px; line-height: 1.65; color: var(--muted); }
+.about-story .about-intro { font-size: 23px; color: var(--ink); line-height: 1.45; }
 .about-story h2 { margin: 32px 0 12px; font-size: 25px; font-weight: 700; letter-spacing: -.6px; line-height: 1.25; }
-.about-story .about-wish { color: #17202f; font-weight: 700; }
+.about-story .about-wish { color: var(--ink); font-weight: 700; }
 .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; }
 .about-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px; font-size: 16px; font-weight: 700; border-radius: 999px; }
-.about-primary { color: #17202f; text-decoration: none; background: #f5cf60; border: 1px solid #9a6b00; }
-.about-primary:hover { background: #edc24c; }
+.about-primary { color: var(--ink); text-decoration: none; background: var(--action); border: 1px solid var(--action-line); }
+.about-primary:hover { background: var(--action-hover); }
 @media (max-width: 800px) {
   .about-page { grid-template-columns: minmax(0, 1fr); gap: 24px; max-width: 740px; }
   .about-portrait { width: 128px; border-radius: 20px; }
