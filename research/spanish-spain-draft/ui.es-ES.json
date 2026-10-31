@@ -1,7 +1,7 @@
 {
   "locale": "es-ES",
   "status": "draft-awaiting-editorial-and-native-review",
-  "sourceDictionarySha256": "b7592295ae9fae983c2fac694060175e6448b88c5c70d84043e974609b274f4f",
+  "sourceDictionarySha256": "838e80f31aeef1be606a397202b844e0edcc90789a2f36697e4e4c80d8cde389",
   "strings": {
     "With thanks to tldraw": "Gracias a tldraw",
     "tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.": "tldraw nos concedió una licencia hobby. Sus herramientas de dibujo dan vida a nuestra firma y a las demostraciones paso a paso.",
@@ -233,7 +233,11 @@
     "Watch our signature come to life": "Mira cómo escribimos Trazolino",
     "View signature": "Ver la firma",
     "Replay": "Repetir",
-    "Try again": "Intentar de nuevo"
+    "Try again": "Intentar de nuevo",
+    "About": "Acerca de Trazolino",
+    "Explore Basic": "Explorar el nivel básico",
+    "Explore Intermediate": "Explorar el nivel intermedio",
+    "Explore Expert": "Explorar el nivel avanzado"
   },
-  "sourceFrenchDictionarySha256": "e806a73f481d102eb3cec05d3b5d5b05c87fc729049b70a3e8dfee32820ba298"
+  "sourceFrenchDictionarySha256": "cdea581ed1ecf2f1a3ae27b1d34c6a1b89f80dbf58dcfeb62e5121bd51c55667"
 }

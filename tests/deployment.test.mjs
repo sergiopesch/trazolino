@@ -6,14 +6,16 @@ import { securityHeaders } from "../config/security.js";
 import { REVIEW_STAGES } from "../src/review-tour.js";
 import { sha256 } from "../scripts/release-metadata.mjs";
 
-test("About ships as a readable static page with local compiled styles and no scripts", async () => {
+test("About ships a readable static fallback with local styles and a bounded translation module", async () => {
   const document = await readFile(new URL("../dist/client/about/index.html", import.meta.url), "utf8");
   assert.match(document, /<html lang="en-GB">/);
+  assert.match(document, /<script[^>]+src="\/assets\/about-[^"]+\.js"/);
+  assert.doesNotMatch(document, /<script[^>]+src="https?:/);
   assert.match(document, /<title>About — Trazolino<\/title>/);
   assert.match(document, /Sergio Peschiera/);
   assert.match(document, /href="https:\/\/trazolino.org\/about\/"/);
   assert.match(document, /name="robots" content="noindex, nofollow"/);
-  assert.doesNotMatch(document, /<script\b|<iframe\b|<audio\b|<video\b|\/src\//i);
+  assert.doesNotMatch(document, /<iframe\b|<audio\b|<video\b|\/src\//i);
   assert.match(document, /src="\/brand\/sergio-peschiera\.jpg"/);
   const portrait = await readFile(new URL("../dist/client/brand/sergio-peschiera.jpg", import.meta.url));
   assert.deepEqual(portrait, await readFile(new URL("../public/brand/sergio-peschiera.jpg", import.meta.url)));

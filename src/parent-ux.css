@@ -92,3 +92,66 @@
   .home-page .home-intro .mobile-how-link { display: none; }
   .home-page .home-footer button { display: inline-flex; min-height: 44px; }
 }
+
+/* Standalone privacy links need comfortable targets, including when translated. */
+.privacy-modal .licence-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 8px;
+}
+.privacy-modal .licence-note a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  max-width: 100%;
+  padding-block: 8px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 620px) {
+  /* Give the family note its own line instead of squeezing three translations. */
+  .home-page .home-footer {
+    display: grid;
+    grid-template-columns: minmax(0, auto) auto;
+    justify-content: center;
+    gap: 0 4px;
+  }
+  .home-page .home-footer > span {
+    grid-column: 1 / -1;
+    max-width: none;
+    justify-self: stretch;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+.home-page .home-footer .about-link { white-space: nowrap; }
+
+@media (min-width: 621px) {
+  /* Shared rows align cards even when one locale needs another line of copy. */
+  .home-page .level-choices {
+    grid-template-rows: minmax(60px, 1fr) auto auto auto auto;
+    row-gap: 10px;
+  }
+  .home-page .level-choice {
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+  }
+  .home-page .level-description {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+  }
+  .home-page .level-link { align-self: stretch; }
+}
+
+@media (max-width: 620px) {
+  /* Natural vertical flow keeps wrapped translations from overlapping in WebKit. */
+  .home-page.home-with-languages { display: flex; flex-direction: column; }
+  .home-page .level-choices { display: flex; flex-direction: column; }
+  .home-page .level-choice { display: flex; height: auto; flex: none; }
+  .home-page .level-picture { flex: 0 0 84px; width: 84px; height: 108px; }
+  .home-page .level-description { flex: 1; min-width: 0; }
+  .home-page .level-link { flex: 0 0 32px; }
+}

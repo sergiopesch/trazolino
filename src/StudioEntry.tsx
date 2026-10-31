@@ -1,8 +1,10 @@
+import { languageFromSearch } from "./locale-url.ts";
+import { documentTitle } from "./locale-navigation.ts";
 import type { LevelId } from "./core/contracts.ts";
 import { translate } from "./ui-translations.js";
 import { LocaleContext } from "./i18n.jsx";
 import { ParentGuide } from "./ParentGuide.tsx";
-import { getLanguage } from "./languages.js";
+import { getLanguage, LANGUAGES } from "./languages.js";
 import { useEffect, useState } from "react";
 import { Home } from "./Home.jsx";
 import { HowItWorks } from "./HowItWorks.jsx";
@@ -14,7 +16,7 @@ import { createLatestLanguageRequest } from "./language-request.js";
 import { prepareEntry } from "./entry-loading.js";
 
 export function StudioEntry() {
-  const [languageId, setLanguageId] = useState("en-GB");
+  const [languageId, setLanguageId] = useState(() => languageFromSearch(location.search, LANGUAGES.map(language => language.id)));
   const [choosingLanguage, setChoosingLanguage] = useState(false);
   const [entry, setEntry] = useState<Awaited<ReturnType<typeof prepareEntry>> | null>(null);
   const [level, setLevel] = useState<LevelId | null>(null);
@@ -26,6 +28,11 @@ export function StudioEntry() {
     document.querySelector<HTMLHeadingElement>("main h1")?.focus({ preventScroll: true });
     return () => request.cancel();
   }, [request]);
+
+  useEffect(() => {
+    document.documentElement.lang = languageId;
+    document.title = documentTitle(languageId);
+  }, [languageId]);
 
   function closePicker() {
     request.cancel();

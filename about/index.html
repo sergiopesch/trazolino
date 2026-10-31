@@ -19,23 +19,24 @@
       <a class="about-brand" href="/" aria-label="Trazolino home">
         <img src="/brand/signature.svg" width="240" height="76" alt="Trazolino" />
       </a>
-      <a class="about-back" href="/">Back to drawing</a>
+      <a class="about-back" data-about="back" href="/">Back to drawing</a>
     </header>
     <main class="about-page">
       <img class="about-portrait" src="/brand/sergio-peschiera.jpg" width="400" height="400" alt="Sergio Peschiera" decoding="async" />
       <article class="about-story">
-        <h1>Hi, I’m <span>Sergio.</span></h1>
-        <p class="about-intro">I’m a dad who discovered that keeping one little person entertained during half-term is a full-time job. 😅</p>
-        <h2>Why I’m building Trazolino</h2>
-        <p>I started looking for simple, creative things my daughter and I could do together at home. That’s how Trazolino came about.</p>
-        <p>It’s a free, work-in-progress drawing teacher for children and their grown-ups. The site shows each step, but the drawing happens on paper.</p>
-        <p>One of my favourite parts is the Venezuelan Spanish voice. A small way to help my little one stay connected to her roots. 🇻🇪</p>
-        <p class="about-wish">I’d love to add more languages, handwriting and other pen-and-paper activities for families around the world.</p>
+        <h1><span data-about="greeting">Hi, I’m </span><span class="about-name">Sergio.</span></h1>
+        <p class="about-intro" data-about="intro">I’m a dad who discovered that keeping one little person entertained during half-term is a full-time job. 😅</p>
+        <h2 data-about="why">Why I’m building Trazolino</h2>
+        <p data-about="origin">I started looking for simple, creative things my daughter and I could do together at home. That’s how Trazolino came about.</p>
+        <p data-about="purpose">It’s a free, work-in-progress drawing teacher for children and their grown-ups. The site shows each step, but the drawing happens on paper.</p>
+        <p data-about="roots">One of my favourite parts is the Venezuelan Spanish voice. A small way to help my little one stay connected to her roots. 🇻🇪</p>
+        <p class="about-wish" data-about="wish">I’d love to add more languages, handwriting and other pen-and-paper activities for families around the world.</p>
         <nav class="about-actions" aria-label="Explore more">
-          <a class="about-primary" href="/">Let’s draw together</a>
-          <a class="about-personal" href="https://www.sergiopesch.com/about" rel="noreferrer">More about me</a>
+          <a class="about-primary" data-about="draw" href="/">Let’s draw together</a>
+          <a class="about-personal" data-about="personal" href="https://www.sergiopesch.com/about" rel="noreferrer">More about me</a>
         </nav>
       </article>
     </main>
+    <script type="module" src="/src/about.ts"></script>
   </body>
 </html>

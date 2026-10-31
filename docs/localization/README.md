@@ -57,3 +57,9 @@ All six translated lesson modules use `createLessonLocalizer` through the existi
 The configured review status records existing provenance only: Spanish Latin America and French retain `assistant-reviewed-awaiting-native-human-review`; the other translated catalogues retain `assistant-draft-awaiting-native-human-review`. Parsing never upgrades either status or constitutes native-speaker approval. Keep editorial exporters, recording fingerprints and the review workflow above as separate release checks.
 
 For source-linked regional formatter code, update its draft and runtime implementation together. The packaging guard uses the existing esbuild parser to compare their executable JavaScript while ignoring type comments and formatting. Wording inside strings and formatter logic remain part of that comparison; the Italian template dictionary retains its separate exact-data check.
+
+## Localized site navigation and founder story
+
+`src/about-copy.json` contains the complete founder story for every written locale, separately from teaching scripts. English voice variants share its English entry. `docs/localization/about-copy-review.json` fingerprints the exact assistant-authored text and retains pending native review. Keep the static English fallback in `about/index.html` aligned when English changes.
+
+The home page links to `/about/?lang=<locale>` and About returns to `/?lang=<locale>`; British English keeps the plain paths. Query values are validated, with English as the unknown-value fallback. Only this explicit language preference travels in the URL; no child/session data or storage is added. Keep About independent of the lesson registry so no-key builds retain their exclusion of lesson/SDK chunks. See the [multilingual interface audit](../design/multilingual-ui-audit.md) for scope and evidence limits.
