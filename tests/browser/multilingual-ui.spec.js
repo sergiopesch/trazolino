@@ -29,6 +29,15 @@ for (const language of LANGUAGES) {
     await expect(page).toHaveTitle(documentTitle(language.id));
     await expect(page.locator('html')).toHaveAttribute('lang', language.id);
     await capture('home');
+    for (const width of [1280, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      const rows = await page.locator('.level-link').evaluateAll(nodes => nodes.map(node => {
+        const { top, bottom } = node.getBoundingClientRect(); return { top, bottom };
+      }));
+      expect(Math.max(...rows.map(row => row.top)) - Math.min(...rows.map(row => row.top))).toBeLessThan(1);
+      expect(Math.max(...rows.map(row => row.bottom)) - Math.min(...rows.map(row => row.bottom))).toBeLessThan(1);
+      await expectReachableControls(page, page.locator('.level-choices'));
+    }
     for (const [key, source] of [['how', 'How it works'], ['parents', 'For grown-ups'], ['privacy', 'Privacy & supervision']]) {
       await page.getByRole('button', { name: t(source), exact: true }).filter({ visible: true }).click();
       await capture(key, page.getByRole('dialog'));
