@@ -16,7 +16,7 @@ Seven written locales: British English, Latin American Spanish, Spain Spanish, F
 
 ## Reproducible evidence
 
-- `tests/browser/multilingual-ui.spec.js`: 14 shared states per option at 1280, 390 and 320 CSS-pixel widths; text containment, reachable targets, no horizontal overflow, localized metadata, About reload/return, completion and silence. Captures desktop/mobile images for each state. Also checks unknown URL values.
+- `tests/browser/multilingual-ui.spec.js`: 14 shared states per option at 1280, 390 and 320 CSS-pixel widths; text containment, reachable targets, no horizontal overflow, localized metadata, About reload/return, completion and silence. Captures desktop/mobile images for each state. Also checks unknown URL values. Included in both the development and production browser suites.
 - `tests/browser/catalogues.spec.js`: all catalogue levels/pages and actual voice samples for all nine options.
 - `tests/browser/accessibility.spec.js`: all-locale lesson/setup/Help/settings plus keyboard-only entry and information dialogs.
 - `tests/browser/about.spec.js`: keyboard navigation, reflow, portrait and no-JavaScript fallback.
