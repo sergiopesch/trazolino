@@ -1,12 +1,12 @@
 import React from 'react'
-import { DrawShapeUtil } from 'tldraw'
+import { NoHatchDrawShapeUtil } from '../NoHatchShapeUtils.ts'
 import { paintDefinitions, paintId } from './paint.js'
 
 const PencilDefinitions=()=> <g dangerouslySetInnerHTML={{__html:paintDefinitions()}}/>
 
 // Only the paint and base width change. tldraw owns pen geometry, pressure,
 // smoothing, native draw records, rendering, and SVG export.
-export class PencilDrawShapeUtil extends DrawShapeUtil {
+export class PencilDrawShapeUtil extends NoHatchDrawShapeUtil {
   constructor(editor) {
     super(editor)
     this.options={...this.options,getCustomDisplayValues:(_editor,shape)=>({

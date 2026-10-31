@@ -5,11 +5,12 @@ import { getAssetUrls } from '@tldraw/assets/selfHosted'
 import { SCORE, fitCamera } from './motion.js'
 import { nativeFrame, applyFrame } from './native.js'
 import { PencilDrawShapeUtil } from './PencilDrawShapeUtil.jsx'
+import { NoHatchArrowShapeUtil, NoHatchGeoShapeUtil } from '../NoHatchShapeUtils.ts'
 import 'tldraw/tldraw.css'
 
 
 const ASSETS=getAssetUrls({baseUrl:'/tldraw'})
-const SHAPE_UTILS=[PencilDrawShapeUtil]
+const SHAPE_UTILS=[PencilDrawShapeUtil,NoHatchGeoShapeUtil,NoHatchArrowShapeUtil]
 const COMPONENTS={Background:null,Grid:null,PageMenu:null,NavigationPanel:null,Toolbar:null,HelpMenu:null,MainMenu:null,StylePanel:null,ActionsMenu:null,ZoomMenu:null}
 const motionQuery=()=>window.matchMedia('(prefers-reduced-motion: reduce)')
 
