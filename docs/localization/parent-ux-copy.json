@@ -155,6 +155,38 @@
         "it-IT": "Riprova",
         "nl-NL": "Opnieuw proberen"
       }
+    },
+    {
+      "source": "With thanks to tldraw",
+      "translations": {
+        "es-419": "Gracias a tldraw",
+        "es-ES": "Gracias a tldraw",
+        "fr-FR": "Merci à tldraw",
+        "de-DE": "Vielen Dank an tldraw",
+        "it-IT": "Grazie a tldraw",
+        "nl-NL": "Met dank aan tldraw"
+      },
+      "context": {
+        "audience": "supervising adult and interested visitors",
+        "intent": "Thank tldraw for providing a hobby licence and explain its drawing tools power the signature and step-by-step demonstrations.",
+        "constraint": "Acknowledge the licence gift without implying sponsorship, endorsement or verified coverage of a particular domain. Keep tldraw lowercase and the licence name recognisable."
+      }
+    },
+    {
+      "source": "tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.",
+      "translations": {
+        "es-419": "tldraw nos concedió una licencia hobby. Sus herramientas de dibujo dan vida a nuestra firma y a las demostraciones paso a paso.",
+        "es-ES": "tldraw nos concedió una licencia hobby. Sus herramientas de dibujo dan vida a nuestra firma y a las demostraciones paso a paso.",
+        "fr-FR": "tldraw nous a accordé une licence hobby. Ses outils de dessin donnent vie à notre signature et à nos démonstrations étape par étape.",
+        "de-DE": "tldraw hat uns eine Hobby-Lizenz zur Verfügung gestellt. Mit diesen Zeichenwerkzeugen entstehen unsere Unterschrift und die Zeichenvorführungen Schritt für Schritt.",
+        "it-IT": "tldraw ci ha concesso una licenza hobby. I suoi strumenti di disegno danno vita alla nostra firma e alle dimostrazioni passo dopo passo.",
+        "nl-NL": "tldraw heeft ons een hobbylicentie gegeven. Met hun tekengereedschap komen onze handtekening en de demonstraties stap voor stap tot leven."
+      },
+      "context": {
+        "audience": "supervising adult and interested visitors",
+        "intent": "Thank tldraw for providing a hobby licence and explain its drawing tools power the signature and step-by-step demonstrations.",
+        "constraint": "Acknowledge the licence gift without implying sponsorship, endorsement or verified coverage of a particular domain. Keep tldraw lowercase and the licence name recognisable."
+      }
     }
   ]
 }

@@ -1,5 +1,7 @@
 // French UI copy, locally authored from the English source; native-speaker review remains pending.
 export const FRENCH_UI = Object.freeze({
+  "With thanks to tldraw": "Merci à tldraw",
+  "tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.": "tldraw nous a accordé une licence hobby. Ses outils de dessin donnent vie à notre signature et à nos démonstrations étape par étape.",
   "Resume this step": "Reprendre cette étape",
   "Next step": "Étape suivante",
   "Replay this step": "Revoir cette étape",

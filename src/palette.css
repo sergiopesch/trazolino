@@ -1,0 +1,43 @@
+/* Approved pencil palette. Shared by the studio, review tools and About. */
+:root {
+  --pencil-yellow: #f3c33d;
+  --eraser: #d99282;
+  --ink: #292723;
+  --paper: #fffdf7;
+  --muted: #645e55;
+  --surface: #ffffff;
+  --surface-soft: #faf7f0;
+  --line: #e6e0d7;
+  --control-line: #857b6e;
+  /* Yellow invites action; ochre edges keep controls distinct from paper. */
+  --action: var(--pencil-yellow);
+  --action-hover: #e9b82f;
+  --action-active: #dcaa24;
+  --action-line: #8a640d;
+  --hover: #fff7df;
+  --active: #ffedb5;
+  /* Graphite carries selected/on states. Eraser tints provide quiet context. */
+  --selection: var(--ink);
+  --selection-hover: #403b33;
+  --selection-active: #1c1a17;
+  --selection-soft: #faeae5;
+  --selection-soft-hover: #f4d9d0;
+  --selection-soft-active: #edc8bc;
+  --progress-track: #e6e0d7;
+  --note: #fff3cc;
+  --note-line: #d0b568;
+  --note-ink: #695321;
+  --disabled-ink: #71695f;
+  --disabled-surface: #ede8df;
+  /* Dark eraser shades give focus and errors sufficient contrast. */
+  --focus: #8d4939;
+  --error: #913e30;
+  --error-surface: #fff0eb;
+  --eraser-line: #d9928270;
+  --help-surface: #fff9ee;
+  --shadow-faint: #29272307;
+  --shadow-soft: #2927230a;
+  --shadow: #29272320;
+  --shadow-raised: #29272330;
+  --backdrop: #29272366;
+}
