@@ -43,15 +43,15 @@ export function LanguageCarousel() {
 }
 
 export function LanguagePicker({ level, onSelect, onClose, pending = null, error = false }: {
-  level: LevelView; onSelect: (language: string) => void; onClose: () => void; pending?: string | null; error?: boolean;
+  level?: LevelView | undefined; onSelect: (language: string) => void; onClose: () => void; pending?: string | null; error?: boolean;
 }) {
   const { t } = useLocale();
   return (
     <Modal title={t("Choose your language")} onClose={onClose} className="language-modal">
-      <p className="language-modal-intro">{t(level.name)}. {t("Next, pick your drawing.")}</p>
+      {level && <p className="language-modal-intro">{t(level.name)}. {t("Next, pick your drawing.")}</p>}
       <div className="language-options" role="group" aria-label={t("Lesson language")}>
         {LANGUAGES.map((language) => {
-          const ready = languageAvailableForLevel(language.id, level.id);
+          const ready = languageAvailableForLevel(language.id, level?.id ?? "basic");
           return <button key={language.id} className="language-option" disabled={!ready || pending === language.id}
             aria-busy={pending === language.id || undefined}
             onClick={() => onSelect(language.id)}>
@@ -65,7 +65,7 @@ export function LanguagePicker({ level, onSelect, onClose, pending = null, error
       {pending && <p className="language-modal-note" role="status">{t("Loading lessons…")}</p>}
       {error && <p className="language-modal-note" role="alert">{t("The selected language could not load. Please try again.")}</p>}
       {LANGUAGES.find((language) => language.id === "es-419")?.ready &&
-        !languageAvailableForLevel("es-419", level.id) && (
+        level && !languageAvailableForLevel("es-419", level.id) && (
           <p className="language-modal-note">{t("Spanish lessons in this level are being prepared. Choose another level or language.")}</p>
         )}
     </Modal>

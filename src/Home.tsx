@@ -1,3 +1,5 @@
+import type { LanguageView } from "./browser/ui-contracts.ts";
+import { SignatureWelcome } from "./SignatureWelcome.tsx";
 import type { LevelId } from "./core/contracts.ts";
 import { useLocale } from "./i18n.jsx";
 import {
@@ -7,46 +9,39 @@ import {
 } from "@phosphor-icons/react";
 import { LEVELS } from "./lesson-levels.js";
 import LESSONS from "./lesson-directory.json";
-import { LanguageCarousel } from "./LanguagePicker.jsx";
+import { LanguageFlag } from "./LanguagePicker.jsx";
 import { drawingCount } from "./catalogue-counts.js";
 
 const levelCounts = Object.fromEntries(LEVELS.map(({ id }) => [id, LESSONS.filter(lesson => lesson.level === id).length]));
 
 export function Brand({ onClick }: { onClick?: () => void }) {
   const { t } = useLocale();
-  return (
-    <button
-      className="brand"
-      onClick={onClick}
-      aria-label={t("Trazolino home")}
-    >
-      <img
-        className="brand-pencil"
-        src="/brand/pencil.webp"
-        width="60"
-        height="44"
-        alt=""
-      />
-      <span className="wordmark">Trazolino</span>
-    </button>
-  );
+  const signature = <img className="brand-signature" src="/brand/signature.svg" width="240" height="76" alt="Trazolino" />;
+  return onClick ? <button className="brand" onClick={onClick} aria-label={t("Trazolino home")}>{signature}</button>
+    : <span className="brand">{signature}</span>;
 }
 
-export function Home({ onExplore, onPrivacy, onHow }: {
+export function Home({ onExplore, onPrivacy, onHow, onParents, onLanguage, language }: {
   onExplore: (level: LevelId) => void;
   onPrivacy: () => void;
   onHow: () => void;
+  onParents: () => void;
+  onLanguage: () => void;
+  language: LanguageView;
 }) {
   const { t, locale } = useLocale();
   return (
     <main className="home-page home-with-languages">
       <header className="site-header">
         <Brand />
+        <button className="catalogue-language home-language" onClick={onLanguage} aria-label={`${language.name} ${t(language.region)}: ${t("Choose your language")}`}>
+          <LanguageFlag language={language} /> {language.name} <span>{t(language.region)}</span>
+        </button>
         <nav className="home-nav" aria-label={t("About the studio")}>
           <button className="quiet-button" onClick={onHow}>
             {t("How it works")}
           </button>
-          <button className="quiet-button" onClick={onPrivacy}>
+          <button className="quiet-button" onClick={onParents}>
             {t("For grown-ups")}
           </button>
         </nav>
@@ -86,6 +81,7 @@ export function Home({ onExplore, onPrivacy, onHow }: {
             </span>
             <span className="level-description">
               <strong>{t(level.name)}</strong>
+              <span className="level-skill">{t(level.description)}</span>
               <span>{drawingCount(locale, levelCounts[level.id])}</span>
             </span>
             <span className="level-link">
@@ -95,7 +91,7 @@ export function Home({ onExplore, onPrivacy, onHow }: {
           </button>
         ))}
       </section>
-      <LanguageCarousel />
+      <SignatureWelcome />
       <footer className="home-footer">
         <span>
           <SpeakerHighIcon size={18} /> {t("Gentle teaching. Room to draw.")}

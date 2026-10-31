@@ -7,6 +7,7 @@ import "./cat-timeline.css";
 
 export default function LessonTimeline(props: {
   lesson: TimingLesson; stepIndex: number; playback: ReturnType<typeof useScriptedPlayback>;
+  familyPaused?: boolean; parentPaced?: boolean;
   elapsedMs: number; stageElapsedMs: number; speed: Speed; still: boolean; voiceOn: boolean;
   narrationDurations: Readonly<Record<string, number>>; boardUnavailable: boolean;
 }) {
@@ -16,7 +17,7 @@ export default function LessonTimeline(props: {
     ...props,
     narrationDurations: props.narrationDurations || {},
   });
-  const estimate = dynamic ? dynamic.estimate(progress, t) : locale === "es-419" && /^About \d+ min left$/.test(progress.estimateLabel)
+  const estimate = props.familyPaused ? t("Paused · nothing moves ahead") : props.parentPaced ? t("At our pace") : dynamic ? dynamic.estimate(progress, t) : locale === "es-419" && /^About \d+ min left$/.test(progress.estimateLabel)
     ? `Quedan unos ${Math.ceil(progress.remainingMs / 60000)} min` : t(progress.estimateLabel);
   return (
     <section className="cat-timeline" aria-label={t("Lesson timeline")}>

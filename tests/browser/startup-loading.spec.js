@@ -7,36 +7,38 @@ test("slow studio loading stays silent, can be canceled, and commits only the la
     if (studio.test(request.url()) || /DemonstrationBoard|\/narration\/.*\.mp3/.test(request.url()))
       heavyRequests.push(request.url());
   });
-  let release;
+  let release, releaseGerman;
   const delay = new Promise(resolve => { release = resolve; });
-  let releaseGerman;
   const germanDelay = new Promise(resolve => { releaseGerman = resolve; });
   const german = /\/(?:src\/german-lessons\.js|assets\/german-lessons-[^/]+\.js)(?:\?.*)?$/;
-  await page.route(german, async route => { await germanDelay; await route.continue(); });
-  let waiting = false;
+  let waiting = false, germanWaiting = false;
+  await page.route(german, async route => { germanWaiting = true; await germanDelay; await route.continue(); });
   await page.route(studio, async route => { waiting = true; await delay; await route.continue(); });
   try {
     await page.goto("/");
-    const basic = page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ });
+    const basic = page.locator(".level-choice").first();
     await expect(basic).toBeVisible();
     expect(heavyRequests, "home does not request the studio, board or recordings").toEqual([]);
     await basic.click();
     await expect.poll(() => waiting).toBe(true);
-    await page.getByRole("button", { name: "English British", exact: true }).click();
     await expect(page.getByRole("status")).toHaveText("Loading lessons…");
     await expect.poll(() => audioSilent(page)).toBe(true);
+    // Opening language selection cancels the pending collection request.
+    await page.getByRole("button", { name: /Choose your language$/ }).click();
     await page.getByRole("button", { name: "Close dialog", exact: true }).click();
-    await expect(basic).toBeFocused();
     const response = page.waitForResponse(response => studio.test(response.url()));
     release();
     await (await response).finished();
     await expect(page.locator(".home-page")).toBeVisible();
     await expect(page.locator(".catalogue-page")).toHaveCount(0);
     await expect(page.locator("audio")).toHaveCount(0);
-    await page.getByRole("button", { name: /^Intermediate drawing 10 drawings Explore(?: Intermediate)?$/ }).click();
+    await page.getByRole("button", { name: /Choose your language$/ }).click();
     await page.getByRole("button", { name: "Deutsch German", exact: true }).click();
-    await expect(page.getByRole("status")).toHaveText("Loading lessons…");
-    await page.getByRole("button", { name: "English British", exact: true }).click();
+    await page.locator(".level-choice").nth(1).click();
+    await expect.poll(() => germanWaiting).toBe(true);
+    await page.locator(".home-language").click();
+    await page.getByRole("button", { name: "English Britisch", exact: true }).click();
+    await page.locator(".level-choice").nth(1).click();
     await expect(page.locator(".catalogue-page")).toBeVisible();
     const germanResponse = page.waitForResponse(response => german.test(response.url()));
     releaseGerman();

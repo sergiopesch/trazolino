@@ -15,6 +15,7 @@ export interface ScriptedPlaybackOptions {
   readonly session: number;
   readonly replayKey: number;
   readonly active: boolean;
+  readonly parentPaced?: boolean;
   readonly boardReady: boolean;
   readonly boardUnavailable?: boolean;
   readonly voiceOn: boolean;
@@ -48,6 +49,7 @@ export function useScriptedPlayback({
   session,
   replayKey,
   active,
+  parentPaced = false,
   boardReady,
   boardUnavailable = false,
   voiceOn,
@@ -176,11 +178,11 @@ export function useScriptedPlayback({
       callbacks.current.onInterruption(
         "We paused because playback was interrupted. Nothing has moved ahead.",
       );
-    } else if (state.stage === "ready" && advanced.current !== state.run) {
+    } else if (state.stage === "ready" && !parentPaced && advanced.current !== state.run) {
       advanced.current = state.run;
       callbacks.current.onAdvance();
     }
-  }, [matches, active, state]);
+  }, [matches, active, state, parentPaced]);
 
   function action(type: "HOLD" | "CONTINUE" | "DEMO_DONE") {
     if (!state || !matches || !active) return;

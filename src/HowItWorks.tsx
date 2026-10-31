@@ -18,7 +18,7 @@ export function HowItWorks({ onClose }: { onClose: () => void }) {
         </li>
       </ol>
       <p className="gentle-note">
-        {t("A grown-up stays alongside throughout. More time waits for you; Pause stops everything. Every picture can be different.")}
+        {t("Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.")}
       </p>
       <button className="primary wide" onClick={onClose}>
         {t("Let’s explore")} <ArrowRightIcon size={21} />

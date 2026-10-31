@@ -21,10 +21,7 @@ export function SiteEntry() {
     <main className="licence-review">
       <header className="review-header">
         <div className="brand">
-          <span className="brand-mark">
-            <PencilSimpleIcon size={25} weight="duotone" />
-          </span>
-          <span className="wordmark">Trazolino</span>
+          <img className="brand-signature" src="/brand/signature.svg" width="240" height="76" alt="Trazolino" />
         </div>
         <span className="review-badge">Hobby licence review</span>
       </header>

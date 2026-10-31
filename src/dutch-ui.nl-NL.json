@@ -213,5 +213,19 @@
   "help.playHint": "Luister naar de tip",
   "help.stopHint": "Tip stoppen",
   "setup.stopVoicePreview": "Stemvoorbeeld stoppen",
-  "settings.stopVoicePreview": "Stemvoorbeeld stoppen"
+  "settings.stopVoicePreview": "Stemvoorbeeld stoppen",
+  "Resume this step": "Deze stap hervatten",
+  "Next step": "Volgende stap",
+  "Replay this step": "Deze stap herhalen",
+  "Take your time. Next step when you’re ready.": "Neem de tijd. De volgende stap als jullie klaar zijn.",
+  "At our pace": "Op ons tempo",
+  "We choose when to start the next step.": "Wij kiezen wanneer de volgende stap begint.",
+  "Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.": "Bij Pauze blijft de tekening zichtbaar terwijl jullie tekenen. Deze stap hervatten gaat hier verder; Volgende stap gaat naar het volgende deel.",
+  "Stay alongside. Different lines, extra time and skipped details are welcome.": "Blijf erbij. Andere lijnen, extra tijd en details overslaan zijn helemaal goed.",
+  "A lovely first drawing": "Een fijne eerste tekening",
+  "Finish session": "Afronden voor vandaag",
+  "Watch our signature come to life": "Zie onze handtekening ontstaan",
+  "View signature": "Handtekening bekijken",
+  "Replay": "Opnieuw afspelen",
+  "Try again": "Opnieuw proberen"
 }

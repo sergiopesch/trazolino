@@ -1,0 +1,92 @@
+/* The signature is the primary identity; the compact T is reserved for browser icons. */
+:root { --paper: #fffdf7; --ink: #292723; --pencil-yellow: #f3c33d; --eraser: #d99282; }
+.brand .brand-signature { width: 220px; height: 72px; object-fit: contain; }
+.studio .brand .brand-signature { width: 170px; height: 54px; }
+.brand { padding: 0; flex-shrink: 0; }
+.home-page.home-with-languages { height: auto; min-height: 100dvh; grid-template-rows: auto auto minmax(260px, 1fr) auto auto; gap: 18px; }
+.home-page .site-header { min-height: 76px; gap: 20px; }
+.home-language { margin-left: auto; }
+.home-nav { flex-shrink: 0; }
+.level-description .level-skill { font-size: 13px; line-height: 1.4; color: var(--muted); }
+.signature-welcome { text-align: center; }
+.signature-welcome > button { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-size: 13px; }
+.signature-modal { width: min(900px, calc(100vw - 24px)); max-width: 900px; }
+.signature-canvas { height: min(44vw, 360px); min-height: 180px; position: relative; pointer-events: none; isolation: isolate; }
+.signature-canvas .tl-background { background: #fffdf7; }
+.signature-still { width: 100%; height: auto; }
+.signature-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.signature-controls button { min-height: 44px; }
+.entry-loading-status { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); padding: 12px 24px; border-radius: 22px; background: var(--paper); box-shadow: 0 4px 20px #29272320; z-index: 20; }
+.inline-help { border: 1px solid #d9928270; border-radius: 18px; background: #fff9ee; padding: 18px; font-size: 14px; line-height: 1.5; grid-column: 1; grid-row: 2; margin: 0 20px 20px; }
+.inline-help h2 { font-size: 19px; margin: 0 0 8px; }
+.inline-help p { margin: 8px 0; }
+.inline-help summary { min-height: 44px; display: list-item; padding-top: 10px; cursor: pointer; font-weight: 700; }
+.inline-help > button { min-height: 44px; }
+.studio:has(.inline-help) { height: auto; min-height: 100dvh; }
+.lesson-shell:has(.inline-help) { grid-template-columns: minmax(260px, .8fr) minmax(0, 1.5fr); grid-template-rows: auto auto auto; }
+.lesson-shell:has(.inline-help) .instruction { grid-column: 1; grid-row: 1; align-items: start; flex-direction: column; }
+.lesson-shell:has(.inline-help) .reference { display: none; }
+.lesson-shell:has(.inline-help) .workspace { grid-column: 2; grid-row: 1 / 3; min-height: 360px; }
+.lesson-shell:has(.inline-help) .lesson-toolbar { grid-column: 1 / -1; grid-row: 3; }
+.pace-choice { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; }
+.pace-choice input { width: 22px; height: 22px; accent-color: var(--selection); }
+.pace-choice span { display: grid; gap: 3px; }
+.pace-choice small { font-size: 12px; color: var(--muted); }
+.drawing-duration { color: var(--muted); font-size: 12px; }
+.recommended-label { align-self: start; width: fit-content; color: #695321; background: #fff1b9; border-radius: 8px; padding: 3px 8px; font-size: 11px !important; font-weight: 800; }
+.time-button[aria-pressed="true"] { background: #fff0c0; border-color: #c9a84b; }
+.time-button span { display: grid; gap: 1px; }
+.time-button small { font-size: 10px; font-weight: 500; }
+.finished-actions { display: grid; gap: 8px; }
+.finished-actions .primary { order: -1; }
+@media (max-width: 850px) {
+  .home-page .site-header { flex-wrap: wrap; gap: 6px 12px; }
+  .home-nav { margin-left: auto; }
+  .brand .brand-signature { width: 190px; height: 62px; }
+}
+@media (max-width: 620px) {
+  .home-page.home-with-languages { grid-template-rows: auto auto auto auto auto; gap: 16px; }
+  .home-page .site-header { min-height: 58px; }
+  .brand .brand-signature { width: 160px; height: 54px; }
+  .studio.cat-pilot .brand .brand-signature, .studio .brand .brand-signature { width: 128px; height: 44px; }
+  .home-language { max-width: 165px; min-height: 44px; flex-wrap: wrap; justify-content: center; font-size: 12px; }
+  .home-language > span:last-child { display: block; font-size: 10px; }
+  .home-nav { display: flex; width: 100%; justify-content: center; }
+  .home-nav button { display: inline-flex !important; min-height: 44px; }
+  .mobile-how-link { display: none; }
+  .home-intro { margin: 0; }
+  .level-description .level-skill { font-size: 11px; }
+  .cat-pilot .cat-timeline-note { display: none; }
+  .cat-pilot .cat-timeline-estimate { max-width: 100%; overflow-wrap: anywhere; }
+  .studio.cat-pilot .lesson-toolbar { gap: 8px; padding: 10px 8px; }
+  .studio.cat-pilot .lesson-button { min-height: 44px; font-size: 12px; line-height: 1.2; white-space: normal; }
+  .studio.cat-pilot .guided-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+  .studio.cat-pilot .guided-actions > button { min-width: 0; min-height: 48px; font-size: 13px; padding: 7px 10px; white-space: normal; }
+  .studio.cat-pilot .workspace { min-height: 300px; }
+  .studio.cat-pilot .board-surface { min-height: 235px; }
+  .studio.cat-pilot .board-status { flex-wrap: wrap; padding: 8px 10px; font-size: 12px; }
+  .studio.cat-pilot .patience-note { display: none; }
+  .lesson-shell:has(.inline-help) { grid-template-columns: minmax(0,1fr); grid-template-rows: auto auto auto auto; }
+  .lesson-shell:has(.inline-help) .workspace { grid-column: 1; grid-row: 2; min-height: 300px; }
+  .lesson-shell:has(.inline-help) .lesson-toolbar { grid-row: 4; }
+  .inline-help { grid-column: 1; grid-row: 3; margin: 12px; }
+  .cat-pilot .instruction .reference { display: none; }
+}
+@media (max-width: 350px) {
+  .brand .brand-signature { width: 135px; height: 48px; }
+  .home-language { max-width: 135px; }
+  .studio.cat-pilot .brand .brand-signature { width: 112px; }
+  .studio.cat-pilot .header-button { padding-inline: 5px; }
+  .studio.cat-pilot .music-label { display: none; }
+}
+@media (max-width: 620px) {
+  .studio.cat-pilot .workspace { grid-template-rows: auto minmax(235px, 1fr) minmax(38px, auto); }
+  .studio.cat-pilot .board-status { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: center; }
+  .cat-pilot .cat-timeline-summary { align-items: start; gap: 8px; }
+  .cat-pilot .cat-timeline-time { min-width: 0; flex-wrap: wrap; justify-content: flex-end; }
+  .cat-pilot .cat-timeline-estimate { white-space: normal; text-align: right; }
+}
+@media (max-width: 620px) {
+  .home-page .home-intro .mobile-how-link { display: none; }
+  .home-page .home-footer button { display: inline-flex; min-height: 44px; }
+}

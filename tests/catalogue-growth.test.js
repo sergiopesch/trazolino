@@ -39,7 +39,7 @@ async function renderFixture(catalogue) {
   const compiled = await build({
     stdin: { contents: 'export { Home } from "./src/Home.jsx"; export { Catalogue } from "./src/Catalogue.jsx"; export { LocaleContext } from "./src/i18n.jsx";', resolveDir: process.cwd() },
     bundle: true, write: false, platform: "node", format: "cjs", jsx: "automatic", loader: { ".css": "empty" },
-    external: ["react", "react/jsx-runtime", "react-dom", "react-dom/server"],
+    external: ["react", "react/jsx-runtime", "react-dom", "react-dom/server", "./signature/SignaturePlayer.jsx"],
     plugins: [{ name: "catalogue-growth", setup(builder) {
       builder.onResolve({ filter: /lesson-directory\.json$/ }, () => ({ path: "directory", namespace: "directory-fixture" }));
       builder.onLoad({ filter: /.*/, namespace: "directory-fixture" }, () => ({
@@ -61,7 +61,7 @@ test("home and catalogue labels follow an eleventh drawing in every language", a
   const { Home, Catalogue, LocaleContext } = await renderFixture([...LESSONS, { ...LESSONS[0], id: "extra" }]);
   for (const [locale, , noun] of counts) {
     const render = child => renderToStaticMarkup(createElement(LocaleContext.Provider, { value: locale }, child));
-    const home = render(createElement(Home));
+    const home = render(createElement(Home, { language: { name: "Test", region: "Test", flag: "" } }));
     assert.match(home, new RegExp(`11 ${noun}`), locale);
     const catalogue = render(createElement(Catalogue, {
       levelId: "basic", page: 2, language: { name: "Test", region: "Test" },
@@ -76,7 +76,7 @@ test("home and catalogue labels follow an eleventh drawing in every language", a
 test("an empty catalogue has a bounded range and disabled pagination", async () => {
   const { Home, Catalogue, LocaleContext } = await renderFixture([]);
   const render = child => renderToStaticMarkup(createElement(LocaleContext.Provider, { value: "en-GB" }, child));
-  assert.match(render(createElement(Home)), /0 drawings/);
+  assert.match(render(createElement(Home, { language: { name: "Test", region: "Test", flag: "" } })), /0 drawings/);
   const catalogue = render(createElement(Catalogue, { levelId: "basic", page: 8, language: { name: "English", region: "British" } }));
   assert.match(catalogue, /drawings 0 to 0 of 0/);
   assert.match(catalogue, /1 of 1/);

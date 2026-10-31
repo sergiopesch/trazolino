@@ -316,3 +316,14 @@ test("silence, audio, animation and model completion have no authority in any re
     }
   }
 });
+
+test("keep drawing resumes a continuous adult session but preserves interruption gating", () => {
+  const drawing = startFor(LESSONS[0]);
+  const finished = lessonReducer(drawing, { type: "FINISH" });
+  const continued = lessonReducer(finished, { type: "KEEP_DRAWING", supervised: true });
+  assert.deepEqual(continued, drawing);
+  for (const supervised of [undefined, false, "true", 1]) {
+    assert.equal(lessonReducer(finished, { type: "KEEP_DRAWING", supervised }).phase, "paused");
+  }
+  assert.equal(lessonReducer(setupFor(LESSONS[0]), { type: "KEEP_DRAWING", supervised: true }).phase, "gate");
+});

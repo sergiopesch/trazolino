@@ -1,0 +1,160 @@
+{
+  "status": "assistant-authored-awaiting-native-human-review",
+  "scope": "New UI copy only; no narration changes. More time remains a secondary Pause label to preserve recorded references.",
+  "messages": [
+    {
+      "source": "Resume this step",
+      "translations": {
+        "es-419": "Continuar este paso",
+        "es-ES": "Continuar este paso",
+        "fr-FR": "Reprendre cette étape",
+        "de-DE": "Diesen Schritt fortsetzen",
+        "it-IT": "Riprendi questo passo",
+        "nl-NL": "Deze stap hervatten"
+      }
+    },
+    {
+      "source": "Next step",
+      "translations": {
+        "es-419": "Siguiente paso",
+        "es-ES": "Siguiente paso",
+        "fr-FR": "Étape suivante",
+        "de-DE": "Nächster Schritt",
+        "it-IT": "Passo successivo",
+        "nl-NL": "Volgende stap"
+      }
+    },
+    {
+      "source": "Replay this step",
+      "translations": {
+        "es-419": "Repetir este paso",
+        "es-ES": "Repetir este paso",
+        "fr-FR": "Revoir cette étape",
+        "de-DE": "Diesen Schritt wiederholen",
+        "it-IT": "Ripeti questo passo",
+        "nl-NL": "Deze stap herhalen"
+      }
+    },
+    {
+      "source": "Take your time. Next step when you’re ready.",
+      "translations": {
+        "es-419": "Sin apuro. Siguiente paso cuando estén listos.",
+        "es-ES": "Sin prisa. Siguiente paso cuando estéis listos.",
+        "fr-FR": "Prenez votre temps. Passez à la suite quand vous voulez.",
+        "de-DE": "Lasst euch Zeit. Weiter, wenn ihr bereit seid.",
+        "it-IT": "Senza fretta. Il prossimo passo quando siete pronti.",
+        "nl-NL": "Neem de tijd. De volgende stap als jullie klaar zijn."
+      }
+    },
+    {
+      "source": "At our pace",
+      "translations": {
+        "es-419": "A nuestro ritmo",
+        "es-ES": "A nuestro ritmo",
+        "fr-FR": "À notre rythme",
+        "de-DE": "In unserem Tempo",
+        "it-IT": "Al nostro ritmo",
+        "nl-NL": "Op ons tempo"
+      }
+    },
+    {
+      "source": "We choose when to start the next step.",
+      "translations": {
+        "es-419": "Elegimos cuándo comenzar el siguiente paso.",
+        "es-ES": "Elegimos cuándo empezar el siguiente paso.",
+        "fr-FR": "Nous choisissons quand passer à la suite.",
+        "de-DE": "Wir entscheiden, wann der nächste Schritt beginnt.",
+        "it-IT": "Scegliamo noi quando iniziare il prossimo passo.",
+        "nl-NL": "Wij kiezen wanneer de volgende stap begint."
+      }
+    },
+    {
+      "source": "Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.",
+      "translations": {
+        "es-419": "Pausar deja el dibujo a la vista mientras dibujan. Continuar este paso lo reanuda; Siguiente paso avanza.",
+        "es-ES": "Pausar deja el dibujo a la vista mientras dibujáis. Continuar este paso lo reanuda; Siguiente paso avanza.",
+        "fr-FR": "Pause laisse le dessin visible pendant que vous dessinez. Reprendre cette étape la poursuit ; Étape suivante passe à la suite.",
+        "de-DE": "Pause lässt das Bild sichtbar, während ihr zeichnet. Diesen Schritt fortsetzen macht hier weiter; Nächster Schritt geht zum nächsten Teil.",
+        "it-IT": "Pausa lascia il disegno visibile mentre disegnate. Riprendi questo passo lo continua; Passo successivo passa al prossimo.",
+        "nl-NL": "Bij Pauze blijft de tekening zichtbaar terwijl jullie tekenen. Deze stap hervatten gaat hier verder; Volgende stap gaat naar het volgende deel."
+      }
+    },
+    {
+      "source": "Stay alongside. Different lines, extra time and skipped details are welcome.",
+      "translations": {
+        "es-419": "Quédate a su lado. Los trazos diferentes, el tiempo extra y saltarse detalles también son parte de dibujar.",
+        "es-ES": "Quédate a su lado. Los trazos diferentes, el tiempo extra y saltarse detalles también son parte de dibujar.",
+        "fr-FR": "Restez à ses côtés. Chacun peut tracer autrement, prendre son temps et laisser des détails de côté.",
+        "de-DE": "Bleiben Sie dabei. Andere Linien, mehr Zeit und ausgelassene Details sind willkommen.",
+        "it-IT": "Resta accanto al tuo bambino. Linee diverse, più tempo e dettagli tralasciati vanno benissimo.",
+        "nl-NL": "Blijf erbij. Andere lijnen, extra tijd en details overslaan zijn helemaal goed."
+      }
+    },
+    {
+      "source": "A lovely first drawing",
+      "translations": {
+        "es-419": "Un lindo dibujo para comenzar",
+        "es-ES": "Un bonito dibujo para empezar",
+        "fr-FR": "Un joli dessin pour commencer",
+        "de-DE": "Ein schöner Einstieg",
+        "it-IT": "Un bel disegno per iniziare",
+        "nl-NL": "Een fijne eerste tekening"
+      }
+    },
+    {
+      "source": "Finish session",
+      "translations": {
+        "es-419": "Terminar por hoy",
+        "es-ES": "Terminar por hoy",
+        "fr-FR": "Terminer pour aujourd’hui",
+        "de-DE": "Für heute aufhören",
+        "it-IT": "Finisci per oggi",
+        "nl-NL": "Afronden voor vandaag"
+      }
+    },
+    {
+      "source": "Watch our signature come to life",
+      "translations": {
+        "es-419": "Mira cómo escribimos Trazolino",
+        "es-ES": "Mira cómo escribimos Trazolino",
+        "fr-FR": "Regardez notre signature prendre vie",
+        "de-DE": "So entsteht unsere Unterschrift",
+        "it-IT": "Guarda nascere la nostra firma",
+        "nl-NL": "Zie onze handtekening ontstaan"
+      }
+    },
+    {
+      "source": "View signature",
+      "translations": {
+        "es-419": "Ver la firma",
+        "es-ES": "Ver la firma",
+        "fr-FR": "Voir la signature",
+        "de-DE": "Unterschrift ansehen",
+        "it-IT": "Mostra la firma",
+        "nl-NL": "Handtekening bekijken"
+      }
+    },
+    {
+      "source": "Replay",
+      "translations": {
+        "es-419": "Repetir",
+        "es-ES": "Repetir",
+        "fr-FR": "Revoir",
+        "de-DE": "Wiederholen",
+        "it-IT": "Rivedi",
+        "nl-NL": "Opnieuw afspelen"
+      }
+    },
+    {
+      "source": "Try again",
+      "translations": {
+        "es-419": "Intentar de nuevo",
+        "es-ES": "Intentar de nuevo",
+        "fr-FR": "Réessayer",
+        "de-DE": "Erneut versuchen",
+        "it-IT": "Riprova",
+        "nl-NL": "Opnieuw proberen"
+      }
+    }
+  ]
+}

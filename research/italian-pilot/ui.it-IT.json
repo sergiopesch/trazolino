@@ -216,6 +216,20 @@
     "help.playHint": "Ascolta il suggerimento",
     "help.stopHint": "Interrompi il suggerimento",
     "setup.stopVoicePreview": "Interrompi la prova della voce",
-    "settings.stopVoicePreview": "Interrompi la prova della voce"
+    "settings.stopVoicePreview": "Interrompi la prova della voce",
+    "Resume this step": "Riprendi questo passo",
+    "Next step": "Passo successivo",
+    "Replay this step": "Ripeti questo passo",
+    "Take your time. Next step when you’re ready.": "Senza fretta. Il prossimo passo quando siete pronti.",
+    "At our pace": "Al nostro ritmo",
+    "We choose when to start the next step.": "Scegliamo noi quando iniziare il prossimo passo.",
+    "Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.": "Pausa lascia il disegno visibile mentre disegnate. Riprendi questo passo lo continua; Passo successivo passa al prossimo.",
+    "Stay alongside. Different lines, extra time and skipped details are welcome.": "Resta accanto al tuo bambino. Linee diverse, più tempo e dettagli tralasciati vanno benissimo.",
+    "A lovely first drawing": "Un bel disegno per iniziare",
+    "Finish session": "Finisci per oggi",
+    "Watch our signature come to life": "Guarda nascere la nostra firma",
+    "View signature": "Mostra la firma",
+    "Replay": "Rivedi",
+    "Try again": "Riprova"
   }
 }

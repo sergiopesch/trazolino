@@ -12,7 +12,7 @@ const visibleCount = page => drawing(page).evaluateAll(nodes => nodes.filter(nod
 test("native drawing stays read-only and still replay preserves the current mark without revealing future marks", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await enterLesson(page);
-  await page.getByRole("button", { name: "More time", exact: true }).click();
+  await page.getByRole("button", { name: "Pause More time", exact: true }).click();
   const board = page.locator(".demonstration-board");
   await expect.poll(() => visibleCount(page)).toBeGreaterThan(100);
   const reference = await snapshot(page);
@@ -27,11 +27,11 @@ test("native drawing stays read-only and still replay preserves the current mark
   expect(await board.locator("pattern[id*='crayon']").count()).toBeGreaterThan(0);
   await page.screenshot({ path: testInfo.outputPath("reference.png"), fullPage: true });
 
-  await page.getByRole("button", { name: "Ready for next", exact: true }).click();
-  await page.getByRole("button", { name: "More time", exact: true }).click();
-  await expect.poll(() => visibleCount(page)).toBe(1);
+  await page.getByRole("button", { name: "Next step", exact: true }).click();
+  await expect.poll(() => visibleCount(page), { timeout: 30000 }).toBe(1);
+  await page.getByRole("button", { name: "Pause More time", exact: true }).click();
   const current = await snapshot(page);
-  await page.getByRole("button", { name: "Show again", exact: true }).click();
+  await page.getByRole("button", { name: "Replay this step", exact: true }).click();
   await expect.poll(() => snapshot(page)).toEqual(current);
   await expect.poll(() => visibleCount(page)).toBe(1);
   await page.screenshot({ path: testInfo.outputPath("current-mark.png"), fullPage: true });

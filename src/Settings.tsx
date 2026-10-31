@@ -2,6 +2,8 @@ import type { Speed } from "./core/contracts.ts";
 
 export interface SettingsProps {
   onClose: () => void;
+  parentPaced: boolean;
+  onParentPaced: (value: boolean) => void;
   voiceOn: boolean;
   voiceAvailable?: boolean;
   onVoice: () => void;
@@ -48,6 +50,8 @@ function Setting({ title, description, checked, onChange, label, disabled = fals
 
 export function Settings({
   onClose,
+  parentPaced,
+  onParentPaced,
   voiceOn,
   voiceAvailable = true,
   onVoice,
@@ -163,6 +167,7 @@ export function Settings({
           id="panel-drawing"
           aria-labelledby="tab-drawing"
         >
+          <Setting title={t("At our pace")} description={t("We choose when to start the next step.")} checked={parentPaced} onChange={() => onParentPaced(!parentPaced)} />
           <Setting
             title={t("Still demonstrations")}
             label={t("Use still demonstrations")}
@@ -188,7 +193,7 @@ export function Settings({
             ))}
           </fieldset>
           <p className="gentle-note">
-            {t("More time holds the current part until you choose Continue lesson. Extra slow also gives longer quiet drawing breaks. Device reduced-motion settings are respected too.")}
+            {t("Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.")}
           </p>
         </section>
       )}

@@ -1,6 +1,5 @@
 @import "@fontsource/nunito/latin-400.css";
 @import "@fontsource/nunito/latin-700.css";
-@import "@fontsource/nunito/latin-900.css";
 
 :root {
   font-family: Nunito, ui-rounded, system-ui, sans-serif;
@@ -28,7 +27,7 @@ a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
   color: inherit;
   text-decoration: none;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -1.1px;
 }
 .about-brand img { object-fit: contain; }
@@ -55,11 +54,11 @@ a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
   padding: 0 28px;
 }
 .about-portrait { display: block; width: 100%; height: auto; border-radius: 24px; }
-.about-story h1 { margin: 0 0 20px; font-size: clamp(38px, 5vw, 64px); font-weight: 900; line-height: 1.1; letter-spacing: -1.8px; }
+.about-story h1 { margin: 0 0 20px; font-size: clamp(38px, 5vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -1.8px; }
 .about-story h1 span { text-decoration: underline; text-decoration-color: #f5cf60; text-decoration-thickness: .13em; text-underline-offset: .06em; text-decoration-skip-ink: none; }
 .about-story p { margin: 0 0 20px; font-size: 18px; line-height: 1.65; color: #58616f; }
 .about-story .about-intro { font-size: 23px; color: #17202f; line-height: 1.45; }
-.about-story h2 { margin: 32px 0 12px; font-size: 25px; font-weight: 900; letter-spacing: -.6px; line-height: 1.25; }
+.about-story h2 { margin: 32px 0 12px; font-size: 25px; font-weight: 700; letter-spacing: -.6px; line-height: 1.25; }
 .about-story .about-wish { color: #17202f; font-weight: 700; }
 .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; }
 .about-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px; font-size: 16px; font-weight: 700; border-radius: 999px; }
@@ -80,3 +79,5 @@ a:focus-visible { outline: 3px solid #ad3e25; outline-offset: 5px; }
   .about-story h2 { font-size: 23px; }
   .about-actions { gap: 4px; }
 }
+
+.about-brand img { width: clamp(140px, 22vw, 240px); height: auto; }

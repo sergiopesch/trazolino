@@ -1,7 +1,7 @@
 {
   "locale": "es-ES",
   "status": "draft-awaiting-editorial-and-native-review",
-  "sourceDictionarySha256": "dac35f60071b0191e9ae25c5490f574d84f7399b0c5a48f1955b7974e39cf23d",
+  "sourceDictionarySha256": "e749139785fd6cf7623ab2abe053feaf3a126b5d3039ba2ed2088bb340afc26a",
   "strings": {
     "Loading lessons…": "Cargando las clases…",
     "The selected voice is being prepared. Read the steps together for now.": "La voz elegida está en preparación. Por ahora, leed los pasos juntos.",
@@ -217,7 +217,21 @@
     "help.playHint": "Escuchar la pista",
     "help.stopHint": "Detener la pista",
     "setup.stopVoicePreview": "Detener la prueba de voz",
-    "settings.stopVoicePreview": "Detener la prueba de voz"
+    "settings.stopVoicePreview": "Detener la prueba de voz",
+    "Resume this step": "Continuar este paso",
+    "Next step": "Siguiente paso",
+    "Replay this step": "Repetir este paso",
+    "Take your time. Next step when you’re ready.": "Sin prisa. Siguiente paso cuando estéis listos.",
+    "At our pace": "A nuestro ritmo",
+    "We choose when to start the next step.": "Elegimos cuándo empezar el siguiente paso.",
+    "Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.": "Pausar deja el dibujo a la vista mientras dibujáis. Continuar este paso lo reanuda; Siguiente paso avanza.",
+    "Stay alongside. Different lines, extra time and skipped details are welcome.": "Quédate a su lado. Los trazos diferentes, el tiempo extra y saltarse detalles también son parte de dibujar.",
+    "A lovely first drawing": "Un bonito dibujo para empezar",
+    "Finish session": "Terminar por hoy",
+    "Watch our signature come to life": "Mira cómo escribimos Trazolino",
+    "View signature": "Ver la firma",
+    "Replay": "Repetir",
+    "Try again": "Intentar de nuevo"
   },
-  "sourceFrenchDictionarySha256": "4a8eeedcb45c9f1c393c4d49d1ba9f48cbfe967dc970c11d544d1f46b958dd5a"
+  "sourceFrenchDictionarySha256": "8dcd7415bd683ec0645c51d51670984fa139c2adb759d805c82b5df0cc675073"
 }

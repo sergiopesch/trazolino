@@ -213,5 +213,19 @@
   "help.playHint": "Hinweis anhören",
   "help.stopHint": "Hinweis stoppen",
   "setup.stopVoicePreview": "Stimmprobe stoppen",
-  "settings.stopVoicePreview": "Stimmprobe stoppen"
+  "settings.stopVoicePreview": "Stimmprobe stoppen",
+  "Resume this step": "Diesen Schritt fortsetzen",
+  "Next step": "Nächster Schritt",
+  "Replay this step": "Diesen Schritt wiederholen",
+  "Take your time. Next step when you’re ready.": "Lasst euch Zeit. Weiter, wenn ihr bereit seid.",
+  "At our pace": "In unserem Tempo",
+  "We choose when to start the next step.": "Wir entscheiden, wann der nächste Schritt beginnt.",
+  "Pause keeps the picture visible while you draw. Resume this step continues; Next step moves on.": "Pause lässt das Bild sichtbar, während ihr zeichnet. Diesen Schritt fortsetzen macht hier weiter; Nächster Schritt geht zum nächsten Teil.",
+  "Stay alongside. Different lines, extra time and skipped details are welcome.": "Bleiben Sie dabei. Andere Linien, mehr Zeit und ausgelassene Details sind willkommen.",
+  "A lovely first drawing": "Ein schöner Einstieg",
+  "Finish session": "Für heute aufhören",
+  "Watch our signature come to life": "So entsteht unsere Unterschrift",
+  "View signature": "Unterschrift ansehen",
+  "Replay": "Wiederholen",
+  "Try again": "Erneut versuchen"
 }

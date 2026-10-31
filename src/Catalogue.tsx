@@ -21,6 +21,8 @@ import { Brand } from "./Home.jsx";
 import { LessonPreview } from "./LessonPreview.jsx";
 import { LanguageFlag } from "./LanguagePicker.jsx";
 import { isLessonAvailable } from "./narration-locales.js";
+import { estimateLessonDurationMs } from "./scripted-session.js";
+import englishDurations from "./narration-durations.json";
 import { dynamicLocale } from "./locale-dynamic.js";
 
 export function Catalogue({
@@ -39,6 +41,7 @@ export function Catalogue({
 }: CatalogueProps) {
   const { t, locale } = useLocale();
   const dynamic = dynamicLocale(locale)?.copy;
+  const minutes = new Intl.NumberFormat(locale, { style: "unit", unit: "minute", unitDisplay: "short" });
   const level = getLevel(levelId);
   if (!level) throw new TypeError("A known drawing level is required.");
   const lessons = LESSONS.filter((lesson) => lesson.level === levelId);
@@ -101,7 +104,9 @@ export function Catalogue({
               <LessonPreview lesson={lesson} labelled={false} />
             </div>
             <span className="drawing-choice-copy">
+              {original.id === "cat" && available && <span className="recommended-label">{t("A lovely first drawing")}</span>}
               <strong>{title}</strong>
+              {available && <small className="drawing-duration">≈ {minutes.format(Math.ceil(estimateLessonDurationMs(lesson, { narrationDurations: localeNarration?.durations ?? englishDurations }) / 60000))}</small>}
               <span>{available ? lesson.invitation : t(locale === "es-419" ? "This Spanish lesson is being prepared." : "This lesson is being prepared.")}</span>
             </span>
             {available && <ArrowRightIcon className="drawing-choice-arrow" size={22} />}
@@ -120,9 +125,7 @@ export function Catalogue({
         })}
       </section>
       <footer className="catalogue-footer">
-        <span className="catalogue-supervision">
-          <HeartIcon size={18} /> {t("Little marks. Your own ideas.")}
-        </span>
+        <button className="quiet-button catalogue-supervision" onClick={onPrivacy}><HeartIcon size={18} /> {t("For grown-ups")}</button>
         <nav className="catalogue-pagination" aria-label={t("More drawings")}>
           <button
             className="quiet-button"

@@ -347,3 +347,28 @@ test("new stages and replay reset stage time; only a new family session resets t
   assert.equal(fresh.stageElapsedMs, 0);
   assert.equal(syncClock(clock), clock, "unchanged render synchronization is stable");
 });
+
+test("drawing pause keeps together-time while freezing the current demonstration", () => {
+  let clock = syncClock(createLessonClock({ session: 1 }), { stage: "demonstration" });
+  clock = tickClock(clock, 8, { stage: "demonstration" });
+  clock = syncClock(clock, { stage: "demonstration", stageActive: false });
+  clock = tickClock(clock, 40, { stage: "demonstration" });
+  assert.equal(clock.elapsedMs, 12000);
+  assert.equal(clock.stageElapsedMs, 2000);
+  const hidden = tickClock(clock, 1, { stage: "demonstration", hidden: true });
+  assert.equal(hidden, clock);
+  clock = syncClock(clock, { stage: "demonstration", stageActive: true });
+  clock = tickClock(clock, 4, { stage: "demonstration" });
+  assert.equal(clock.elapsedMs, 13000);
+  assert.equal(clock.stageElapsedMs, 3000);
+});
+
+test("resuming a drawing pause gives a restarted instruction its full estimate", () => {
+  let clock = tickClock(syncClock(createLessonClock({ session: 1 })), 8);
+  clock = tickClock(syncClock(clock, { stageActive: false }), 20);
+  assert.equal(clock.elapsedMs, 7000);
+  assert.equal(clock.stageElapsedMs, 2000);
+  clock = syncClock(clock, { stageActive: true });
+  assert.equal(clock.elapsedMs, 7000);
+  assert.equal(clock.stageElapsedMs, 0);
+});
