@@ -147,7 +147,8 @@
 }
 
 @media (max-width: 620px) {
-  /* Let each mobile card grow with its translation, including in WebKit. */
+  /* Natural vertical flow keeps wrapped translations from overlapping in WebKit. */
+  .home-page.home-with-languages { display: flex; flex-direction: column; }
   .home-page .level-choices { display: flex; flex-direction: column; }
   .home-page .level-choice { display: flex; height: auto; flex: none; }
   .home-page .level-picture { flex: 0 0 84px; width: 84px; height: 108px; }

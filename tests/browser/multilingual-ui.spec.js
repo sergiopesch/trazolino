@@ -15,9 +15,9 @@ for (const language of LANGUAGES) {
     const capture = async (state, scope = page.locator('main')) => {
       for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: width === 1280 ? 900 : 844 });
+        await page.evaluate(() => document.fonts.ready);
         await expectReflow(page);
         await expectReachableControls(page, scope);
-        await page.evaluate(() => document.fonts.ready);
         // Start at the top after checking scrollable controls, to keep evidence comparable.
         await page.evaluate(() => { scrollTo(0, 0); document.querySelector('dialog[open]')?.scrollTo(0, 0); });
         if (width !== 320) await page.screenshot({ path: testInfo.outputPath(`${state}-${width}.png`), fullPage: !await page.locator('dialog[open]').count() });
