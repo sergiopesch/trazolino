@@ -56,7 +56,7 @@ a:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; }
 }
 .about-portrait { display: block; width: 100%; height: auto; border-radius: 24px; }
 .about-story h1 { margin: 0 0 20px; font-size: clamp(38px, 5vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -1.8px; }
-.about-story h1 span { text-decoration: underline; text-decoration-color: var(--action); text-decoration-thickness: .13em; text-underline-offset: .06em; text-decoration-skip-ink: none; }
+.about-story h1 .about-name { text-decoration: underline; text-decoration-color: var(--action); text-decoration-thickness: .13em; text-underline-offset: .06em; text-decoration-skip-ink: none; }
 .about-story p { margin: 0 0 20px; font-size: 18px; line-height: 1.65; color: var(--muted); }
 .about-story .about-intro { font-size: 23px; color: var(--ink); line-height: 1.45; }
 .about-story h2 { margin: 32px 0 12px; font-size: 25px; font-weight: 700; letter-spacing: -.6px; line-height: 1.25; }
@@ -82,3 +82,7 @@ a:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; }
 }
 
 .about-brand img { width: clamp(140px, 22vw, 240px); height: auto; }
+
+.about-story { min-width: 0; overflow-wrap: anywhere; }
+.about-actions a { max-width: 100%; text-align: center; }
+.about-back { text-align: center; }

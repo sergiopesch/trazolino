@@ -187,6 +187,54 @@
         "intent": "Thank tldraw for providing a hobby licence and explain its drawing tools power the signature and step-by-step demonstrations.",
         "constraint": "Acknowledge the licence gift without implying sponsorship, endorsement or verified coverage of a particular domain. Keep tldraw lowercase and the licence name recognisable."
       }
+    },
+    {
+      "source": "About",
+      "context": "Footer link to the founder story.",
+      "translations": {
+        "es-419": "Acerca de Trazolino",
+        "es-ES": "Acerca de Trazolino",
+        "fr-FR": "À propos",
+        "de-DE": "Über Trazolino",
+        "it-IT": "La nostra storia",
+        "nl-NL": "Over Trazolino"
+      }
+    },
+    {
+      "source": "Explore Basic",
+      "context": "Complete invitation on a home level card. Translate as a phrase rather than joining a verb and a level name.",
+      "translations": {
+        "es-419": "Explorar el nivel básico",
+        "es-ES": "Explorar el nivel básico",
+        "fr-FR": "Découvrir le niveau débutant",
+        "de-DE": "Einfache Zeichnungen entdecken",
+        "it-IT": "Esplora il livello base",
+        "nl-NL": "Ontdek eenvoudige tekeningen"
+      }
+    },
+    {
+      "source": "Explore Intermediate",
+      "context": "Complete invitation on a home level card. Translate as a phrase rather than joining a verb and a level name.",
+      "translations": {
+        "es-419": "Explorar el nivel intermedio",
+        "es-ES": "Explorar el nivel intermedio",
+        "fr-FR": "Découvrir le niveau intermédiaire",
+        "de-DE": "Weitere Zeichnungen entdecken",
+        "it-IT": "Esplora il livello intermedio",
+        "nl-NL": "Ontdek meer tekeningen"
+      }
+    },
+    {
+      "source": "Explore Expert",
+      "context": "Complete invitation on a home level card. Translate as a phrase rather than joining a verb and a level name.",
+      "translations": {
+        "es-419": "Explorar el nivel avanzado",
+        "es-ES": "Explorar el nivel avanzado",
+        "fr-FR": "Découvrir le niveau avancé",
+        "de-DE": "Anspruchsvolle Zeichnungen entdecken",
+        "it-IT": "Esplora il livello avanzato",
+        "nl-NL": "Ontdek uitdagende tekeningen"
+      }
     }
   ]
 }

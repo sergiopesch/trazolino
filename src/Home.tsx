@@ -1,3 +1,4 @@
+import { languageHref } from "./locale-url.ts";
 import type { LanguageView } from "./browser/ui-contracts.ts";
 import { SignatureWelcome } from "./SignatureWelcome.tsx";
 import type { LevelId } from "./core/contracts.ts";
@@ -85,7 +86,7 @@ export function Home({ onExplore, onPrivacy, onHow, onParents, onLanguage, langu
               <span>{drawingCount(locale, levelCounts[level.id])}</span>
             </span>
             <span className="level-link">
-              <span>{t("Explore")} <span className="level-link-name">{t(level.short)}</span></span>
+              <span>{t(`Explore ${level.short}`)}</span>
               <ArrowRightIcon size={22} weight="bold" />
             </span>
           </button>
@@ -97,7 +98,7 @@ export function Home({ onExplore, onPrivacy, onHow, onParents, onLanguage, langu
           <SpeakerHighIcon size={18} /> {t("Gentle teaching. Room to draw.")}
         </span>
         <button onClick={onPrivacy}>{t("Privacy & supervision")}</button>
-        <a className="about-link" href="/about/" lang="en-GB">About</a>
+        <a className="about-link" href={languageHref("/about/", locale)}>{t("About")}</a>
       </footer>
     </main>
   );

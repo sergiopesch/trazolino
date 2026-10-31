@@ -1,0 +1,7 @@
+{
+  "status": "assistant-authored-awaiting-native-human-review",
+  "source": "src/about-copy.json",
+  "sha256": "c1333fd7bbffbbfdabd84ecdc8641df08cdafddad5ae0206f3162586e7eebec9",
+  "scope": "Founder story and navigation only. Preserve first-person voice, paper-first drawing, free work-in-progress status and Venezuelan roots. English voice variants share the English text. No lesson or narration changes.",
+  "review": "Assistant editorial pass against the English source and locale guides. Browser review and responsive regression evidence are documented in docs/design/multilingual-ui-audit.md. Native-language review remains pending."
+}

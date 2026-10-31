@@ -1,3 +1,4 @@
+import { documentTitle } from "./locale-navigation.ts";
 import type { LevelId, Speed } from "./core/contracts.ts";
 import type { DemonstrationBoardProps, InitialSelection, LessonView } from "./browser/ui-contracts.ts";
 import { LocaleContext, translate } from "./i18n.jsx";
@@ -224,9 +225,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
 
   useEffect(() => {
     document.documentElement.lang = language.id;
-    document.title = dynamicLocale(language.id)?.copy.documentTitle ?? (language.id === "es-419"
-      ? "Trazolino — Todo dibujo comienza con una pequeña línea"
-      : "Trazolino — Every drawing starts with a little line");
+    document.title = documentTitle(language.id);
   }, [language.id]);
 
   useEffect(() => {

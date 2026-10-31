@@ -1,4 +1,4 @@
-// French UI copy, locally authored from the English source; native-speaker review remains pending.
+// French UI copy; native-speaker review remains pending.
 export const FRENCH_UI = Object.freeze({
   "With thanks to tldraw": "Merci à tldraw",
   "tldraw provided a hobby licence. Their drawing tools bring our signature and step-by-step demonstrations to life.": "tldraw nous a accordé une licence hobby. Ses outils de dessin donnent vie à notre signature et à nos démonstrations étape par étape.",
@@ -230,5 +230,9 @@ export const FRENCH_UI = Object.freeze({
   "help.playHint": "Écouter l’indice",
   "help.stopHint": "Arrêter l’indice",
   "setup.stopVoicePreview": "Arrêter l’essai de la voix",
-  "settings.stopVoicePreview": "Arrêter l’essai de la voix"
+  "settings.stopVoicePreview": "Arrêter l’essai de la voix",
+  "About": "À propos",
+  "Explore Basic": "Découvrir le niveau débutant",
+  "Explore Intermediate": "Découvrir le niveau intermédiaire",
+  "Explore Expert": "Découvrir le niveau avancé"
 });

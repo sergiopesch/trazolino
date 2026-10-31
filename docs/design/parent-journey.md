@@ -41,3 +41,7 @@ The 320px phone board has a 235px minimum surface height. Controls wrap and the 
 Run `npm run check`. Regression coverage includes independent together/stage clocks, hidden/stale clock events, continuous versus interrupted Keep drawing, and the reviewable UI copy in every translated locale. Source-linked regional dictionaries remain aligned; new wording is assistant-authored and still needs native/fluent review. No paid media or new voices were generated.
 
 The local browser walkthrough covers English/Spanish entry, language retention, optional native animation, pause/silence/visible reference, inline Help, finish/continue, and desktop/390px/320px layouts. Development tldraw displays its normal licence notice. This is not full audio mastering, physical-device, screen-reader or reduced-motion OS certification. Family comprehension testing remains separate. Production verification follows the exact merged commit through the protected release workflow.
+
+### Multilingual polish
+
+The small-screen footer gives the family note its own row so translated Privacy/About labels have room. Level invitations are complete translated phrases. About follows the selected language and returns to that language; the initial home title now follows the selection too. Privacy's standalone legal/audio links have 44px-high targets. See [the multilingual audit](multilingual-ui-audit.md) for coverage and review boundaries.
