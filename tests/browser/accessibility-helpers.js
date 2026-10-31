@@ -52,7 +52,7 @@ export async function expectReachableControls(page, scope) {
           range.selectNodeContents(text);
           for (const rect of range.getClientRects()) {
             if (rect.width && rect.height && (rect.left < box.left - 1 || rect.right > box.right + 1 || rect.top < box.top - 2 || rect.bottom > box.bottom + 2))
-              clipped.push(text.textContent.trim());
+              clipped.push({ text: text.textContent.trim(), textBox: rect.toJSON(), controlBox: box.toJSON() });
           }
         }
         return { label: node.getAttribute("aria-label") || node.textContent.trim(), clipped,

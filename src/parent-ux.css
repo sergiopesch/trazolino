@@ -119,6 +119,8 @@
   }
   .home-page .home-footer > span {
     grid-column: 1 / -1;
+    max-width: none;
+    justify-self: stretch;
     justify-content: center;
     text-align: center;
     font-size: 12px;
@@ -142,4 +144,13 @@
     grid-template-rows: subgrid;
   }
   .home-page .level-link { align-self: stretch; }
+}
+
+@media (max-width: 620px) {
+  /* Let each mobile card grow with its translation, including in WebKit. */
+  .home-page .level-choices { display: flex; flex-direction: column; }
+  .home-page .level-choice { display: flex; height: auto; flex: none; }
+  .home-page .level-picture { flex: 0 0 84px; width: 84px; height: 108px; }
+  .home-page .level-description { flex: 1; min-width: 0; }
+  .home-page .level-link { flex: 0 0 32px; }
 }
