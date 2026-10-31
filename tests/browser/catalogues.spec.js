@@ -15,8 +15,9 @@ for (const [name, locale, setupTitle] of [
   test(`${name}: all collections and a real voice sample`, async ({ page }) => {
     await page.goto("/");
     await expect(page.locator(".home-page")).toBeVisible();
-    await page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ }).click();
+    await page.getByRole("button", { name: /Choose your language$/ }).click();
     await page.getByRole("button", { name, exact: true }).click();
+    await page.locator(".level-choice").first().click();
     await expect(page.locator(".catalogue-page")).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     for (let level = 0; level < 3; level++) {

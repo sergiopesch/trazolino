@@ -12,10 +12,11 @@ export interface LessonState {
 }
 
 export type LessonCommand =
+  | { readonly type: "KEEP_DRAWING"; readonly supervised?: boolean }
   | { readonly type: "OPEN_CATALOGUE"; readonly level: LevelId }
   | { readonly type: "SELECT_LESSON"; readonly lessonId: string }
   | { readonly type: "START" | "RESUME"; readonly supervised: boolean }
-  | { readonly type: "NEXT" | "BACK" | "PAUSE" | "FINISH" | "KEEP_DRAWING" | "RESTART" | "RESET" };
+  | { readonly type: "NEXT" | "BACK" | "PAUSE" | "FINISH" | "RESTART" | "RESET" };
 
 export interface AuthoredStep {
   readonly id: string;

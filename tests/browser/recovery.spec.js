@@ -6,8 +6,9 @@ test("a failed board pauses safely and loads after restarting the lesson", async
   const boardModule = /\/src\/DemonstrationBoard\.(?:jsx|tsx)(?:\?.*)?$/;
   let blockedRequests = 0;
   await page.route(boardModule, route => { blockedRequests++; return route.abort("failed"); });
-  await page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ }).click();
+  await page.getByRole("button", { name: /Choose your language$/ }).click();
   await page.getByRole("button", { name: "Nederlands Dutch", exact: true }).click();
+  await page.locator(".level-choice").first().click();
   await page.locator("button.drawing-choice").first().click();
   await page.locator(".entry-supervision input").check();
   await page.locator(".entry-confirmation-actions .primary").click();
@@ -23,7 +24,7 @@ test("a failed board pauses safely and loads after restarting the lesson", async
 
   await page.unroute(boardModule);
   await page.locator(".session-strip button").first().click();
-  await page.locator(".finished-actions .quiet-button").first().click();
+  await page.locator(".finished-actions .quiet-button").last().click();
   await expect(page.locator(".entry-confirmation-actions .primary")).toBeDisabled();
   await page.locator(".entry-supervision input").check();
   await page.locator(".entry-confirmation-actions .primary").click();
@@ -49,7 +50,9 @@ test("a failed language download can be retried without changing language early"
   await page.goto("/");
   const module = "**/src/german-lessons.js";
   await page.route(module, route => route.abort("failed"));
-  await page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ }).click();
+  await page.getByRole("button", { name: /^Basic drawing .*10 drawings Explore(?: Basic)?$/ }).click();
+  await expect(page.locator(".catalogue-page")).toBeVisible();
+  await page.locator(".catalogue-language").click();
   await page.getByRole("button", { name: "Deutsch German", exact: true }).click();
   await expect(page.getByRole("alert")).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "en-GB");

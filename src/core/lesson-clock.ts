@@ -9,12 +9,13 @@ interface ClockIdentity {
 }
 export interface LessonClock extends ClockIdentity {
   readonly active: boolean;
+  readonly stageActive: boolean;
   readonly textOnly: boolean;
   readonly elapsedMs: number;
   readonly stageElapsedMs: number;
 }
 export type ClockCommand = ClockIdentity & (
-  | { readonly type: "SYNC"; readonly active: boolean; readonly textOnly: boolean }
+  | { readonly type: "SYNC"; readonly active: boolean; readonly textOnly: boolean; readonly stageActive?: boolean }
   | { readonly type: "TICK"; readonly deltaMs: number; readonly hidden: boolean }
 );
 
@@ -38,6 +39,7 @@ export function createLessonClock({ session }: { session?: number } = {}): Lesso
     run: null,
     stage: null,
     active: false,
+    stageActive: false,
     textOnly: false,
     elapsedMs: 0,
     stageElapsedMs: 0,
@@ -51,11 +53,12 @@ export function lessonClockReducer(clock: LessonClock, event: ClockCommand): Les
   if (event.type === "SYNC") {
     const matches = clockMatches(clock, event);
     const active = event.active === true;
+    const stageActive = active && event.stageActive !== false;
     const textOnly = event.textOnly === true;
     const restartedVoice =
       matches &&
-      !clock.active &&
-      active &&
+      !clock.stageActive &&
+      stageActive &&
       event.stage === "instruction" &&
       !textOnly;
     const elapsedMs = clock.session === event.session ? clock.elapsedMs : 0;
@@ -63,6 +66,7 @@ export function lessonClockReducer(clock: LessonClock, event: ClockCommand): Les
     if (
       matches &&
       clock.active === active &&
+      clock.stageActive === stageActive &&
       clock.textOnly === textOnly &&
       clock.elapsedMs === elapsedMs &&
       clock.stageElapsedMs === stageElapsedMs
@@ -74,6 +78,7 @@ export function lessonClockReducer(clock: LessonClock, event: ClockCommand): Les
       run: event.run,
       stage: event.stage,
       active,
+      stageActive,
       textOnly,
       elapsedMs,
       stageElapsedMs,
@@ -94,6 +99,6 @@ export function lessonClockReducer(clock: LessonClock, event: ClockCommand): Les
   return {
     ...clock,
     elapsedMs: addMs(clock.elapsedMs, amount),
-    stageElapsedMs: addMs(clock.stageElapsedMs, amount),
+    stageElapsedMs: clock.stageActive ? addMs(clock.stageElapsedMs, amount) : clock.stageElapsedMs,
   };
 }

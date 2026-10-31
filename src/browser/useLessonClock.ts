@@ -9,11 +9,12 @@ export interface LessonClockOptions {
   readonly stepIndex: number;
   readonly playback: ScriptedSession | null;
   readonly active: boolean;
+  readonly stageActive?: boolean;
 }
 
-// Active together-time is independent of the lesson scheduler. Pauses never
-// consume this clock or create a catch-up delta after resuming.
-export function useLessonClock({ enabled, session, stepIndex, playback, active }: LessonClockOptions) {
+// A deliberate drawing pause counts as time together, but freezes the stage
+// clock. Interruptions stop both; neither clock catches up after returning.
+export function useLessonClock({ enabled, session, stepIndex, playback, active, stageActive = active }: LessonClockOptions) {
   const [clock, send] = useReducer(
     lessonClockReducer,
     { session },
@@ -23,7 +24,7 @@ export function useLessonClock({ enabled, session, stepIndex, playback, active }
   const stage = playback?.stage ?? null;
   const textOnly = playback?.textOnly === true;
   const ticking = Boolean(enabled && active && playback && !playback.interrupted);
-  const current = { session, stepIndex, run, stage, textOnly, active: ticking };
+  const current = { session, stepIndex, run, stage, textOnly, active: ticking, stageActive };
   useEffect(() => {
     send({
       type: "SYNC",
@@ -33,8 +34,9 @@ export function useLessonClock({ enabled, session, stepIndex, playback, active }
       stage,
       textOnly,
       active: ticking,
+      stageActive,
     });
-  }, [session, stepIndex, run, stage, textOnly, ticking]);
+  }, [session, stepIndex, run, stage, textOnly, ticking, stageActive]);
   useEffect(() => {
     if (!ticking) return;
     let last = performance.now();

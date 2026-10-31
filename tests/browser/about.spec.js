@@ -25,8 +25,8 @@ test("About is reachable by keyboard and returns to the drawing choices", async 
   }
   await page.getByRole("link", { name: "Let’s draw together" }).click();
   await expect(page.locator("#home-title")).toBeVisible();
-  await page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", { name: /^Basic drawing .*10 drawings Explore(?: Basic)?$/ }).click();
+  await expect(page.locator(".catalogue-page")).toBeVisible();
 });
 
 test("About remains readable without JavaScript and loads only local resources", async ({ browser, baseURL }) => {

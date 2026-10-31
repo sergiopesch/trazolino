@@ -3,7 +3,7 @@ import { LANGUAGES } from "../../src/languages.js";
 import { translate } from "../../src/ui-translations.js";
 import { auditAccessibility, expectReflow, expectReachableControls, tabTo } from "./accessibility-helpers.js";
 
-const basic = page => page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ });
+const basic = page => page.getByRole("button", { name: /^Basic drawing .*10 drawings Explore(?: Basic)?$/ });
 
 for (const language of LANGUAGES) {
   test(`${language.id}: accessible names and controls survive zoom and landscape`, async ({ page }, testInfo) => {
@@ -12,8 +12,9 @@ for (const language of LANGUAGES) {
     // 320 x 256 CSS pixels is the reflow equivalent of 1280 x 1024 at 400%.
     await page.setViewportSize({ width: 320, height: 256 });
     await page.goto("/");
-    await basic(page).click();
+    await page.getByRole("button", { name: /Choose your language$/ }).click();
     await page.getByRole("button", { name: `${language.name} ${language.region}`, exact: true }).click();
+    await page.locator(".level-choice").first().click();
     const catalogue = page.locator(".catalogue-page");
     await expect(catalogue).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("lang", language.id);
@@ -34,7 +35,7 @@ for (const language of LANGUAGES) {
     await page.locator(".entry-supervision input").check();
     await page.locator(".entry-confirmation-actions .primary").click();
     await expect(page.locator(".demonstration-board")).toBeVisible();
-    await page.getByRole("button", { name: t("lesson.moreTime"), exact: true }).click();
+    await page.getByRole("button", { name: `${t("Pause")} ${t("More time")}`, exact: true }).click();
     await expect.poll(() => audioSilent(page)).toBe(true);
     // Desktop exposes the full text labels; compact layouts use the same names.
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -51,7 +52,7 @@ for (const language of LANGUAGES) {
     const help = page.getByRole("button", { name: t("Help"), exact: true });
     await help.click();
     await expectReflow(page);
-    await expectReachableControls(page, page.getByRole("dialog"));
+    await expectReachableControls(page, page.locator(".inline-help"));
     await auditAccessibility(page, testInfo, "help");
     await page.keyboard.press("Escape");
     await expect(help).toBeFocused();
@@ -79,7 +80,7 @@ test("homepage, information dialogs and language picker pass automated accessibi
     await auditAccessibility(page, testInfo, name);
     await page.keyboard.press("Escape");
   }
-  await basic(page).click();
+  await page.getByRole("button", { name: /Choose your language$/ }).click();
   await auditAccessibility(page, testInfo, "language-picker");
 });
 
@@ -106,10 +107,12 @@ test("keyboard-only entry, lesson and dialogs preserve family control", async ({
     await page.keyboard.press("Escape");
     await expect(opener).toBeFocused();
   }
-  await tabTo(page, basic(page));
+  await tabTo(page, page.getByRole("button", { name: /Choose your language$/ }));
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("heading", { name: "Choose your language", exact: true })).toBeFocused();
+  await expect(page.getByRole("heading", { name: /Choose your language$/ })).toBeFocused();
   await tabTo(page, page.getByRole("button", { name: "English British", exact: true }));
+  await page.keyboard.press("Enter");
+  await tabTo(page, basic(page));
   await page.keyboard.press("Enter");
   await expect(page.locator("#catalogue-title")).toBeFocused();
   await tabTo(page, page.locator("button.drawing-choice").first());
@@ -131,13 +134,13 @@ test("keyboard-only entry, lesson and dialogs preserve family control", async ({
   await page.keyboard.press("Enter");
   await expect(page.locator(".demonstration-board")).toBeVisible();
   await expect(page.locator(".instruction h1")).toBeFocused();
-  await tabTo(page, page.getByRole("button", { name: "More time", exact: true }));
+  await tabTo(page, page.getByRole("button", { name: "Pause More time", exact: true }));
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: "Continue lesson", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Resume this step", exact: true })).toBeVisible();
   const help = page.getByRole("button", { name: "Help", exact: true });
   await tabTo(page, help);
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog").getByRole("heading")).toBeFocused();
+  await expect(page.locator(".inline-help h2")).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(help).toBeFocused();
   const settings = page.getByRole("button", { name: "Grown-ups: Parent settings", exact: true });
@@ -157,13 +160,9 @@ test("keyboard-only entry, lesson and dialogs preserve family control", async ({
   await tabTo(page, page.getByRole("button", { name: "Done", exact: true }));
   await page.keyboard.press("Enter");
   await expect(settings).toBeFocused();
-  await tabTo(page, page.getByRole("button", { name: "Pause: Pause lesson", exact: true }));
+  await tabTo(page, page.getByRole("button", { name: "Resume this step", exact: true }));
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: "Continue together", exact: true })).toBeDisabled();
-  await tabTo(page, page.locator(".pause-modal input"));
-  await page.keyboard.press("Space");
-  await tabTo(page, page.getByRole("button", { name: "Continue together", exact: true }));
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: "Continue lesson", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Pause More time", exact: true })).toBeVisible();
+  await expect(page.locator(".pause-modal")).toHaveCount(0);
   await expect.poll(() => audioSilent(page)).toBe(true);
 });

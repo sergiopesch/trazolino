@@ -50,7 +50,7 @@ button {
   border: 0;
   background: none;
   touch-action: manipulation;
-  font-weight: 800;
+  font-weight: 700;
 }
 button:disabled {
   cursor: default;
@@ -90,7 +90,7 @@ h2 {
   letter-spacing: -0.8px;
   line-height: 1.17;
   margin: 0;
-  font-weight: 800;
+  font-weight: 700;
 }
 h1:focus,
 h2:focus {

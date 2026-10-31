@@ -5,9 +5,9 @@ import "@fontsource/nunito/latin-400.css";
 import "@fontsource/nunito/latin-600.css";
 import "@fontsource/nunito/latin-700.css";
 import "@fontsource/nunito/latin-800.css";
-import "@fontsource/nunito/latin-900.css";
 import "./styles.css";
 import "./brand.css";
+import "./parent-ux.css";
 
 class LessonBoundary extends React.Component<{ children: React.ReactNode }, { failed: boolean }> {
   state = { failed: false };

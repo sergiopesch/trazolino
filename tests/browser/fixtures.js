@@ -27,10 +27,16 @@ export const test = base.extend({
 });
 export { expect };
 
-export async function enterLesson(page, language = "English British") {
+export async function enterCatalogue(page, language = "English British") {
   await page.goto("/");
-  await page.getByRole("button", { name: /^Basic drawing 10 drawings Explore(?: Basic)?$/ }).click();
+  await page.getByRole("button", { name: /Choose your language$/ }).click();
   await page.getByRole("button", { name: language, exact: true }).click();
+  await page.locator(".level-choice").first().click();
+  await expect(page.locator(".catalogue-page")).toBeVisible();
+}
+
+export async function enterLesson(page, language = "English British") {
+  await enterCatalogue(page, language);
   await page.locator("button.drawing-choice").first().click();
   await expect(page.locator(".entry-confirmation-actions .primary")).toBeDisabled();
   await page.locator(".entry-supervision input").check();

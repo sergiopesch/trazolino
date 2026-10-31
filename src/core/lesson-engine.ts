@@ -66,7 +66,7 @@ export function createLessonEngine(catalogue: readonly CatalogueEntry[]) {
       case "FINISH":
         return ["drawing", "paused"].includes(state.phase) ? { ...state, phase: "finished" } : state;
       case "KEEP_DRAWING":
-        return state.phase === "finished" ? { ...state, phase: "paused" } : state;
+        return state.phase === "finished" ? { ...state, phase: event.supervised === true ? "drawing" : "paused" } : state;
       case "RESTART":
         return state.phase === "finished" && selected ? { ...state, phase: "gate", step: 0 } : state;
       case "RESET": return { ...initialLesson };

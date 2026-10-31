@@ -32,6 +32,7 @@ import { LESSONS, getLesson, getLevel, narrationKey } from "./lesson-catalogue.j
 import { Modal } from "./Modal.jsx";
 import { LessonPreview } from "./LessonPreview.jsx";
 import DemonstrationErrorBoundary from "./DemonstrationErrorBoundary.js";
+import { ParentGuide } from "./ParentGuide.tsx";
 import { Home, Brand } from "./Home.jsx";
 import { Catalogue } from "./Catalogue.jsx";
 import { HowItWorks } from "./HowItWorks.jsx";
@@ -49,7 +50,7 @@ import { dynamicLocale } from "./locale-dynamic.js";
 import LessonTimeline from "./LessonTimeline.jsx";
 
 type BoardModule = typeof import("./DemonstrationBoard.jsx");
-type Overlay = "settings" | "help" | "privacy" | "how" | "leave";
+type Overlay = "settings" | "help" | "privacy" | "how" | "parents" | "leave";
 let boardPromise: Promise<BoardModule> | undefined;
 function loadDemonstrationBoard() {
   if (!boardPromise) boardPromise = import("./DemonstrationBoard.jsx").catch((error) => {
@@ -87,6 +88,12 @@ export function activateInitialSelection(selection: InitialSelection) {
 export function App({ initialSelection = null }: { initialSelection?: InitialSelection | null }) {
   const [lesson, dispatch] = useReducer(lessonReducer, initialSelection, selection => selection
     ? lessonReducer(initialLesson, { type: "OPEN_CATALOGUE", level: selection.level }) : initialLesson);
+  const [familyPaused, setFamilyPaused] = useState(false);
+  const [parentPaced, setParentPaced] = useState(false);
+  const adultPresent = useRef(false);
+  const helpButton = useRef<HTMLButtonElement>(null);
+  const helpHeading = useRef<HTMLHeadingElement>(null);
+  const [homeLanguagePicker, setHomeLanguagePicker] = useState(false);
   const [overlay, setOverlay] = useState<Overlay | null>(null);
   const [languageLevel, setLanguageLevel] = useState<LevelId | null>(null);
   const [languageId, setLanguageId] = useState(initialSelection?.languageId ?? DEFAULT_LANGUAGE);
@@ -143,7 +150,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
   const steps = selectedLesson.steps;
   const step = steps[selectedUnavailable ? 0 : lesson.step];
   if (!step) throw new TypeError("A known drawing step is required.");
-  const active = lesson.phase === "drawing" && !selectedUnavailable && !overlay;
+  const canControl = lesson.phase === "drawing" && !selectedUnavailable && (!overlay || overlay === "help");
+  const active = canControl && !familyPaused && !overlay;
   const audioAllowed =
     active ||
     (!selectedUnavailable && (overlay === "settings" || overlay === "help")) ||
@@ -164,6 +172,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     if (overlay === "help") stopNarration();
     else quiet();
     setOverlay(null);
+    if (overlay === "help") helpButton.current?.focus();
   }, [overlay, quiet, stopNarration]);
 
   useEffect(() => {
@@ -182,6 +191,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     audioRef.current = audio;
     const hide = () => {
       if (!document.hidden) return;
+      adultPresent.current = false;
       quiet();
       setSupervised(false);
       setOverlay(null);
@@ -259,8 +269,10 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     else void narrate("sample", true);
   }
   function openOverlay(value: Overlay) {
-    if (value === "help" && active) stopNarration();
-    else quiet();
+    if (value === "help") {
+      stopNarration();
+      setFamilyPaused(true);
+    } else quiet();
     setOverlay(value);
   }
   async function enableMusic() {
@@ -287,7 +299,16 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     audioRef.current?.setMusicEnabled(false);
     setMusicOn(false);
   }
+  function openHomeLanguage() {
+    setHomeLanguagePicker(true);
+    setLanguageLevel("basic");
+  }
+  function explore(levelId: LevelId) {
+    setCataloguePage(0);
+    dispatch({ type: "OPEN_CATALOGUE", level: levelId });
+  }
   function openCatalogue(levelId: LevelId) {
+    setHomeLanguagePicker(false);
     if (!getLevel(levelId)) return;
     languageLoad.cancel();
     setLanguagePending(null);
@@ -325,7 +346,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
           setVoiceUnavailable(false);
           setCataloguePage(0);
           setLanguagePending(null);
-          dispatch({ type: "OPEN_CATALOGUE", level });
+          if (!homeLanguagePicker) dispatch({ type: "OPEN_CATALOGUE", level });
           setLanguageLevel(null);
         },
         onError: () => { setLanguagePending(null); setLanguageError(true); },
@@ -349,6 +370,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     if (!candidate || lesson.phase !== "catalogue" || candidate.level !== lesson.level ||
         !isLessonAvailable(languageId, candidate, localeNarration)) return;
     prepareBoard();
+    setFamilyPaused(false);
     quiet();
     audioRef.current?.stopAll();
     const pilot = candidate.pilot === true;
@@ -377,6 +399,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
   function start() {
     if (!supervised || lesson.phase !== "gate" || !isLessonAvailable(languageId, getLesson(lesson.lessonId), localeNarration)) return;
     quiet();
+    adultPresent.current = true;
+    setFamilyPaused(false);
     const key = narrationKey(selectedLesson, 0);
     if (voiceAvailable && voiceOn && key !== null)
       audioRef.current?.prepareClip(narration.index[key]);
@@ -387,6 +411,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     setSupervised(false);
   }
   function pause() {
+    adultPresent.current = false;
     quiet();
     setSupervised(false);
     setOverlay(null);
@@ -403,11 +428,21 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     pause();
     notify(t(message));
   }
+  function toggleDrawingPause() {
+    if (!canControl) return;
+    quiet();
+    setOverlay(null);
+    if (familyPaused && musicOn) void enableMusic();
+    setFamilyPaused(value => !value);
+  }
   function navigate(direction: -1 | 1) {
-    if (!active || (direction < 0 && lesson.step === 0)) return;
+    if (!canControl || (direction < 0 && lesson.step === 0)) return;
     const now = performance.now();
     if (now - lastNavigation.current < 450) return;
     lastNavigation.current = now;
+    if (familyPaused && musicOn) void enableMusic();
+    setFamilyPaused(false);
+    setOverlay(null);
     speechVersion.current++;
     audioRef.current?.setTeaching(true);
     audioRef.current?.stopSpeech();
@@ -416,7 +451,10 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     dispatch({ type: direction > 0 ? "NEXT" : "BACK" });
   }
   function replay() {
-    if (!active) return;
+    if (!canControl) return;
+    if (familyPaused && musicOn) void enableMusic();
+    setFamilyPaused(false);
+    setOverlay(null);
     speechVersion.current++;
     audioRef.current?.setTeaching(true);
     audioRef.current?.stopSpeech();
@@ -424,6 +462,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     setReplayKey((n) => n + 1);
   }
   function reset(toSetup = false) {
+    adultPresent.current = false;
+    setFamilyPaused(false);
     if (toSetup && !isLessonAvailable(languageId, getLesson(lesson.lessonId), localeNarration)) return;
     if (toSetup) prepareBoard();
     languageLoad.cancel();
@@ -444,6 +484,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
   }
   function resume() {
     if (!supervised) return;
+    adultPresent.current = true;
+    setFamilyPaused(false);
     if (musicOn) void enableMusic();
     if (playback.state?.interrupted) setReplayKey((value) => value + 1);
     dispatch({ type: "RESUME", supervised });
@@ -462,6 +504,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     speed,
     still,
     narrate,
+    parentPaced,
     onAdvance: () => navigate(1),
     onInterruption: interrupted,
   });
@@ -470,7 +513,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     session,
     stepIndex: lesson.step,
     playback: playback.state,
-    active: active && (boardReady || boardUnavailable),
+    active: canControl && (boardReady || boardUnavailable),
+    stageActive: active,
   });
   const previewAllowed = musicPreview && lesson.phase === "gate" && !overlay;
   const helpMusicAllowed = lesson.phase === "drawing" && !selectedUnavailable && overlay === "help";
@@ -479,7 +523,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
       !previewAllowed && !active && !helpMusicAllowed,
     );
     audioRef.current?.setTeaching(
-      speaking || (!previewAllowed && (playback.state?.stage !== "practice" || demoPlaying)),
+      speaking || (!previewAllowed && !helpMusicAllowed && active && (playback.state?.stage === "instruction" || demoPlaying)),
     );
     if (!audioAllowed) quiet();
   }, [
@@ -496,6 +540,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     if (!active || boardReady || boardUnavailable) return;
     const timeout = setTimeout(() => {
       quiet();
+      adultPresent.current = false;
       setSupervised(false);
       dispatch({ type: "PAUSE" });
       setNotice(
@@ -504,6 +549,9 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     }, 20000);
     return () => clearTimeout(timeout);
   }, [active, boardReady, boardUnavailable, quiet]);
+  useEffect(() => {
+    if (overlay === "help") helpHeading.current?.focus({ preventScroll: true });
+  }, [overlay]);
   const modal =
     overlay ||
     (["paused", "finished"].includes(lesson.phase) ? lesson.phase : null);
@@ -518,7 +566,9 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
     : lesson.step === 0
       ? "GET READY"
       : `STEP ${lesson.step} OF ${steps.length - 1}`;
-  const status = playback.state?.hold
+  const status = familyPaused || (parentPaced && ["practice", "ready"].includes(playback.state?.stage ?? ""))
+    ? "Take your time. Next step when you’re ready."
+    : playback.state?.hold
     ? "All the time you need."
     : speaking
       ? "Listen to this little step."
@@ -552,7 +602,10 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
       />
       {lesson.phase === "home" ? (
         <Home
-          onExplore={openCatalogue}
+          onExplore={explore}
+          onLanguage={openHomeLanguage}
+          language={language}
+          onParents={() => openOverlay("parents")}
           onPrivacy={() => openOverlay("privacy")}
           onHow={() => openOverlay("how")}
         />
@@ -564,7 +617,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
           onLevel={changeCollection}
           onSelect={selectLesson}
           onHome={() => reset()}
-          onPrivacy={() => openOverlay("privacy")}
+          onPrivacy={() => openOverlay("parents")}
           language={language}
           localizeLesson={localizeLesson}
           localizedTitle={localizedTitle}
@@ -605,9 +658,11 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
           }}
           onSoundClose={quiet}
           onBack={cancelSetup}
+          parentPaced={parentPaced}
+          onParentPaced={setParentPaced}
           onStart={start}
           onHome={() => reset()}
-          onPrivacy={() => openOverlay("privacy")}
+          onPrivacy={() => openOverlay("parents")}
         />
       ) : (
         <main className={`studio ${selectedLesson.pilot ? "cat-pilot" : ""}`}>
@@ -630,15 +685,6 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
               )}
               <button
                 className="header-button"
-                onClick={pause}
-                disabled={lesson.phase !== "drawing"}
-                aria-label={`${t("lesson.pause")}: ${t("Pause lesson")}`}
-              >
-                <PauseIcon size={22} />
-                <span className="button-label">{t("lesson.pause")}</span>
-              </button>
-              <button
-                className="header-button"
                 onClick={() => openOverlay("settings")}
                 aria-label={`${t("Grown-ups")}: ${t("Parent settings")}`}
               >
@@ -648,8 +694,8 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
             </nav>
           </header>
           {selectedLesson.pilot && (
-            <LessonTimeline lesson={selectedLesson} stepIndex={lesson.step}
-              playback={playback} {...lessonClock} speed={speed} still={still} voiceOn={voiceOn} narrationDurations={narration.durations} boardUnavailable={boardUnavailable} />
+            <LessonTimeline lesson={selectedLesson} stepIndex={lesson.step} familyPaused={familyPaused} parentPaced={parentPaced}
+              playback={{ ...playback, state: playback.state && { ...playback.state, hold: familyPaused || parentPaced || playback.state.hold } }} {...lessonClock} speed={speed} still={still} voiceOn={voiceOn} narrationDurations={narration.durations} boardUnavailable={boardUnavailable} />
           )}
           <div className="lesson-shell">
             <section
@@ -670,7 +716,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
                       setVoiceOn(true);
                       replay();
                     }}
-                    disabled={!active || !voiceAvailable}
+                    disabled={!canControl || !voiceAvailable}
                     aria-label={`${t("lesson.replayInstruction")}: ${t("Hear this instruction again")}`}
                   >
                     <SpeakerHighIcon size={21} />
@@ -764,12 +810,25 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
                 </span>
                 <strong>{t(status)}</strong>
                 <span className="patience-note">
-                  {t(step.kind === "explore" || playback.state?.hold
+                  {t(step.kind === "explore" || familyPaused || parentPaced || playback.state?.hold
                     ? "No hurry."
                     : "Continues gently. Pause any time.")}
                 </span>
               </div>
             </section>
+              {overlay === "help" && <aside id="step-help" className="inline-help" aria-labelledby="step-help-title"
+                onKeyDown={event => { if (event.key === "Escape") closeOverlay(); }}>
+                <h2 id="step-help-title" ref={helpHeading} tabIndex={-1}>{t("One little thing to try.")}</h2>
+                <p>{step.hint}</p>
+                <button className="sample-button compact" disabled={!voiceAvailable}
+                  onClick={() => speaking ? stopNarration() : void narrate(narrationKey(selectedLesson, lesson.step, "hint"), true)}>
+                  {speaking ? <StopIcon size={20} /> : <SpeakerHighIcon size={21} />}
+                  {t(speaking ? "help.stopHint" : "help.playHint")}
+                </button>
+                <details><summary>{t("The teacher’s words")}</summary><p>{step.spoken}</p></details>
+                <details><summary>{t("Try it together")}</summary><p>{step.notice}</p><p>{selectedLesson.simplify}</p></details>
+                <button className="quiet-button" onClick={closeOverlay}>{t("Back to this step")}</button>
+              </aside>}
             <footer
               className="lesson-toolbar"
               aria-label={t("Demonstration controls")}
@@ -778,7 +837,7 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
                 <button
                   className="lesson-button"
                   onClick={() => navigate(-1)}
-                  disabled={!active || lesson.step === 0}
+                  disabled={!canControl || lesson.step === 0}
                 >
                   <CaretLeftIcon size={22} />
                   <span>{t("Back")}</span>
@@ -786,50 +845,40 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
                 <button
                   className="lesson-button"
                   onClick={replay}
-                  disabled={!active}
+                  disabled={!canControl}
                 >
                   <ArrowCounterClockwiseIcon size={23} />
-                  <span>{t("lesson.replayDemonstration")}</span>
+                  <span>{t("Replay this step")}</span>
                 </button>
                 <button
                   className="lesson-button"
-                  onClick={() => openOverlay("help")}
-                  disabled={!active}
+                  ref={helpButton}
+                  aria-expanded={overlay === "help"}
+                  aria-controls="step-help"
+                  onClick={() => overlay === "help" ? closeOverlay() : openOverlay("help")}
+                  disabled={!canControl}
                 >
                   <QuestionIcon size={23} />
                   <span>{t("Help")}</span>
                 </button>
               </div>
               <div className="guided-actions">
-                {step.kind !== "explore" && (
-                  <button
-                    className="next-button time-button"
-                    disabled={!active}
-                    onClick={
-                      playback.state?.hold ? playback.continue : playback.hold
-                    }
-                  >
-                    {playback.state?.hold ? (
-                      <PlayIcon size={22} />
-                    ) : (
-                      <HeartIcon size={22} />
-                    )}
-                    <span>
-                      {t(playback.state?.hold ? "Continue lesson" : "lesson.moreTime")}
-                    </span>
-                  </button>
-                )}
+                <button className="next-button time-button" disabled={!canControl}
+                  onClick={toggleDrawingPause} aria-pressed={familyPaused}>
+                  {familyPaused ? <PlayIcon size={22} /> : <PauseIcon size={22} />}
+                  <span>{t(familyPaused ? "Resume this step" : "lesson.pause")}{!familyPaused && <small>{t("lesson.moreTime")}</small>}</span>
+                </button>
                 <button
                   className="ready-button"
                   onClick={() => navigate(1)}
-                  disabled={!active}
+                  disabled={!canControl}
                 >
                   <span>
                     {t(step.kind === "explore"
                       ? "Finish drawing"
                       : step.canSkip
                         ? "Leave this detail"
-                        : "Ready for next")}
+                        : "Next step")}
                   </span>
                   <ArrowRightIcon size={20} />
                 </button>
@@ -911,71 +960,22 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
           <p className="modal-intro">
             {t("Your picture can tell its own story. Talk about it together, if you like.")}
           </p>
-          <button
-            className="primary wide"
-            onClick={() => dispatch({ type: "KEEP_DRAWING" })}
-          >
-            {t("Keep drawing")} <PencilSimpleIcon size={21} />
+          <button className="primary wide" onClick={() => { quiet(); changeCollection(lesson.level); }}>
+            {t("Choose another drawing")} <ArrowRightIcon size={21} />
           </button>
+          <button className="quiet-button wide" onClick={() => reset()}>{t("Finish session")}</button>
           <div className="finished-actions">
-            <button className="quiet-button" onClick={() => reset(true)}>
-              {t("Draw together again")}
-            </button>
-            <button
-              className="quiet-button"
-              onClick={() => {
-                quiet();
-                changeCollection(lesson.level);
-              }}
-            >
-              {t("Choose another drawing")}
-            </button>
-            <button className="quiet-button" onClick={() => reset()}>
-              {t("Back home")}
-            </button>
+            <button className="quiet-button" onClick={() => {
+              setFamilyPaused(true);
+              dispatch({ type: "KEEP_DRAWING", supervised: adultPresent.current });
+            }}>{t("Keep drawing")} <PencilSimpleIcon size={21} /></button>
+            <button className="quiet-button" onClick={() => reset(true)}>{t("Draw together again")}</button>
           </div>
         </Modal>
       )}
       {pickerLevel && (
-        <LanguagePicker level={pickerLevel} onSelect={selectLanguage}
+        <LanguagePicker level={homeLanguagePicker ? undefined : pickerLevel} onSelect={selectLanguage}
           pending={languagePending} error={languageError} onClose={closeLanguagePicker} />
-      )}
-      {modal === "help" && (
-        <Modal title={t("One little thing to try.")} onClose={closeOverlay}>
-          {selectedLesson.teachingPack && step.spoken !== step.instruction && (
-            <div className="gentle-note">
-              <strong>{t("The teacher’s words")}</strong>
-              <p>{step.spoken}</p>
-            </div>
-          )}
-          <p className="modal-intro">{step.hint}</p>
-          <button
-            className="sample-button compact"
-            disabled={!voiceAvailable}
-            onClick={() =>
-              speaking
-                ? stopNarration()
-                : void narrate(
-                    narrationKey(selectedLesson, lesson.step, "hint"),
-                    true,
-                  )
-            }
-          >
-            {speaking ? <StopIcon size={20} /> : <SpeakerHighIcon size={21} />}{" "}
-            {t(speaking ? "help.stopHint" : "help.playHint")}
-          </button>
-          <div className="gentle-note">
-            <strong>{t(step.notice === selectedLesson.parentNote ? "For this drawing" : "Try it together")}</strong>
-            <p>{step.notice.replace(/^\p{L}/u, (letter) => letter.toLocaleUpperCase(languageId))}</p>
-          </div>
-          <p className="settings-note">
-            {selectedLesson.simplify ||
-              t("Try a larger shape or leave out a detail. Your version is welcome.")}
-          </p>
-          <button className="primary wide" onClick={closeOverlay}>
-            {t("Back to this step")} <ArrowRightIcon size={22} />
-          </button>
-        </Modal>
       )}
       {modal === "settings" && (
         <Settings
@@ -997,12 +997,15 @@ export function App({ initialSelection = null }: { initialSelection?: InitialSel
           onStill={() => setStill((v) => !v)}
           speed={speed}
           onSpeed={setSpeed}
+          parentPaced={parentPaced}
+          onParentPaced={setParentPaced}
           onSample={sampleVoice}
           speaking={speaking}
           voiceUnavailable={voiceUnavailable}
           onPrivacy={() => openOverlay("privacy")}
         />
       )}
+      {modal === "parents" && <ParentGuide onClose={closeOverlay} onPrivacy={() => openOverlay("privacy")} />}
       {modal === "privacy" && (
         <Privacy onClose={closeOverlay} />
       )}
