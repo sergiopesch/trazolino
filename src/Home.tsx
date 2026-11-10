@@ -12,6 +12,7 @@ import { LEVELS } from "./lesson-levels.js";
 import LESSONS from "./lesson-directory.json";
 import { LanguageFlag } from "./LanguagePicker.jsx";
 import { drawingCount } from "./catalogue-counts.js";
+import serviceNotice from "./service-notice.json";
 
 const levelCounts = Object.fromEntries(LEVELS.map(({ id }) => [id, LESSONS.filter(lesson => lesson.level === id).length]));
 
@@ -31,6 +32,7 @@ export function Home({ onExplore, onPrivacy, onHow, onParents, onLanguage, langu
   language: LanguageView;
 }) {
   const { t, locale } = useLocale();
+  const notice = serviceNotice[locale as keyof typeof serviceNotice] ?? serviceNotice["en-GB"];
   return (
     <main className="home-page home-with-languages">
       <header className="site-header">
@@ -48,6 +50,9 @@ export function Home({ onExplore, onPrivacy, onHow, onParents, onLanguage, langu
         </nav>
       </header>
       <section className="home-intro" aria-labelledby="home-title">
+        <aside className="service-notice" aria-label={notice.label}>
+          <strong>{notice.label}</strong>{" "}{notice.message}
+        </aside>
         <h1
           id="home-title"
           aria-label={t("Every drawing starts with a little line.")}

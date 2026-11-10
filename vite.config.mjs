@@ -58,8 +58,12 @@ export default defineConfig(({ command, mode }) => {
         // WebKit can retain a failed preloaded entry that imports shared code
         // from its importer. Let import() fetch that entry so an explicit retry
         // can recover; preserve CSS and shared dependency preloads.
-        resolveDependencies: (entry, dependencies, { hostType }) =>
-          hostType === "js" ? dependencies.filter(dependency => dependency !== entry) : dependencies,
+        resolveDependencies: (entry, dependencies, { hostType, hostId }) => {
+          // About remains useful without JavaScript. Avoid fetching its shared
+          // module when scripts are disabled; the entry imports it when needed.
+          if (hostType === "html" && hostId === "about/index.html") return [];
+          return hostType === "js" ? dependencies.filter(dependency => dependency !== entry) : dependencies;
+        },
       },
     },
     optimizeDeps: {

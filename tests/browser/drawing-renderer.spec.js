@@ -9,6 +9,16 @@ const snapshot = page => drawing(page).evaluateAll(nodes => nodes.map(node => ({
 })));
 const visibleCount = page => drawing(page).evaluateAll(nodes => nodes.filter(node => Number(getComputedStyle(node).opacity) > 0).length);
 
+test("the cat reference remains visible beyond the SDK licence check", async ({ page }) => {
+  await enterLesson(page);
+  await page.getByRole("button", { name: "Pause More time", exact: true }).click();
+  await expect.poll(() => visibleCount(page)).toBeGreaterThan(0);
+  // The installed SDK removes the editor five seconds after rejecting a licence.
+  await page.waitForTimeout(6500);
+  await expect(page.locator("[data-testid='tl-license-expired']")).toHaveCount(0);
+  await expect.poll(() => visibleCount(page)).toBeGreaterThan(0);
+});
+
 test("native drawing stays read-only and still replay preserves the current mark without revealing future marks", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await enterLesson(page);
