@@ -8,6 +8,8 @@ The product is **Trazolino**, with canonical origin **https://trazolino.org** an
 
 Existing local checkout paths, drawing metadata keys and the shared narration-generation lock retain their compatibility names. Do not rename a shared lock or recreate the repository/project as part of branding: existing generation processes and specialist checkouts must keep coordinating against the same resources. Historical release records retain their original names and commit identities.
 
+The current Vercel project name is `trazolino` in scope `sergiopeschs-projects`. A stale local link or command using `little-line-studio` can report that the project does not exist. Check `vercel --scope sergiopeschs-projects project inspect trazolino` before treating that error as lost access. The connected Vercel integration and local CLI can have different access: on 10 November 2026 the integration returned 404 while the authenticated CLI resolved the existing project successfully. Do not create a replacement project to work around that discrepancy.
+
 After a repository rename, update existing clone remotes with `git remote set-url origin https://github.com/sergiopesch/trazolino.git`. Verify a fresh branch deployment and the post-merge production workflow against the new repository identity. The production workflow verifies the custom domain directly.
 
 ## Vercel settings
@@ -34,7 +36,9 @@ The sharing card can be rebuilt with `npm run update:social-card` after installi
 
 Set `VITE_TLDRAW_LICENSE_KEY` in Vercel's Production and Preview environment settings before deploying the active lesson. This is a browser-readable SDK licence by design, not a private AI-provider credential. Keep it out of Git and documentation. Confirm the signature, expiry and allowed domains; preview deployments may need additional domain coverage.
 
-The initial deployment uses the existing any-domain evaluation key, expiring **2026-11-08**. Replace it with an appropriate production key and redeploy before that date. With no key, production builds intentionally select the licence-review page. Do not publish a development build or change the SDK to evade its checks.
+The initial deployment used an any-domain evaluation key that expired **2026-11-08**. On 29 October 2026 tldraw approved a non-commercial hobby licence expiring **2027-10-29** for `drawingteacher-paper-studio.sergiopesch.chatgpt.site`. Its issued key does not cover `trazolino.org`; obtain a key valid for that host before restoring active lessons. The expired evaluation key causes the SDK to remove the live board shortly after it appears. With no key, production builds intentionally select the licence-review page. Do not publish a development build or change the SDK to evade its checks.
+
+The temporary home-page service notice and its assistant-authored translations live in `src/service-notice.json`; native-language review remains pending. The incident-notice release retains tldraw and its existing enforcement. It informs visitors of the outage without restoring the board, so live lesson verification remains failing until the licence is resolved. Remove the notice after a valid production licence is installed and the live lesson checks pass.
 
 No `ELEVENLABS_API_KEY`, OpenAI key or generation credentials belong in Vercel. Prepared MP3 playback makes no generation calls.
 
