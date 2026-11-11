@@ -54,6 +54,8 @@ With Git integration, pushes to `main` trigger production builds, and other bran
 
 ## Repeatable production verification
 
+For a comprehensive app audit, including every released lesson and language, follow [full-app testing](full-app-testing.md). The production verifier below is one part of that audit, not the full lesson matrix.
+
 From the checkout matching the deployed revision, install the pinned browser binaries and run:
 
 ```bash
