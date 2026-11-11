@@ -1,9 +1,0 @@
-{
-  "en-GB": { "label": "Service update", "message": "Drawing demonstrations are temporarily unavailable while we resolve a licence issue. We’re sorry and are working to restore them." },
-  "es-419": { "label": "Aviso", "message": "Las demostraciones de dibujo no están disponibles temporalmente mientras resolvemos un problema con la licencia. Lo sentimos y estamos trabajando para restablecerlas." },
-  "es-ES": { "label": "Aviso", "message": "Las demostraciones de dibujo no están disponibles temporalmente mientras resolvemos un problema con la licencia. Lo sentimos y estamos trabajando para restablecerlas." },
-  "fr-FR": { "label": "Information", "message": "Les démonstrations de dessin sont temporairement indisponibles pendant que nous résolvons un problème de licence. Nous en sommes désolés et travaillons à les rétablir." },
-  "de-DE": { "label": "Hinweis", "message": "Die Zeichenvorführungen sind vorübergehend nicht verfügbar, während wir ein Lizenzproblem klären. Es tut uns leid. Wir arbeiten daran, sie wieder bereitzustellen." },
-  "it-IT": { "label": "Avviso", "message": "Le dimostrazioni di disegno sono temporaneamente non disponibili mentre risolviamo un problema di licenza. Ci dispiace e stiamo lavorando per ripristinarle." },
-  "nl-NL": { "label": "Mededeling", "message": "De tekenvoorbeelden zijn tijdelijk niet beschikbaar terwijl we een licentieprobleem oplossen. Het spijt ons en we werken eraan om ze te herstellen." }
-}

@@ -155,16 +155,3 @@
   .home-page .level-description { flex: 1; min-width: 0; }
   .home-page .level-link { flex: 0 0 32px; }
 }
-.service-notice {
-  max-width: 760px;
-  margin: 0 auto 14px;
-  padding: 12px 16px;
-  border: 1px solid #9a6b00;
-  border-radius: 12px;
-  background: #fff4cf;
-  color: #17202f;
-  font-size: 15px;
-  line-height: 1.45;
-  text-align: left;
-}
-.service-notice strong { margin-right: 4px; }
