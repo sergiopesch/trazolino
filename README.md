@@ -99,6 +99,13 @@ Vercel runs `npm run check` before publishing. Failed tests or inconsistent rele
 
 This is an evolving family drawing project. Automated checks do not establish educational efficacy, legal compliance, comprehensive accessibility or safeguarding approval. Our next steps are educator/family evaluation, native-language listening review and carefully reviewing additional languages.
 
-The initial hosted release used a tldraw evaluation licence that expired **8 November 2026**. A hobby licence approved on 29 October 2026 expires **29 October 2027** and covers the originally registered Site domain, not trazolino.org. A key valid for the production domain is required before restoring the hosted lesson. Keys are excluded from this repository, and the SDK's licence enforcement is unchanged. See the [tldraw licensing documentation](https://tldraw.dev/community/license).
+The hosted application at trazolino.org runs under a tldraw hobby (non-commercial) licence approved on **11 November 2026**, valid until **11 November 2027**, covering both trazolino.org and the originally registered Site domain. Licence keys are excluded from this repository, and the SDK's licence enforcement is unchanged. See the [tldraw licensing documentation](https://tldraw.dev/community/license).
 
-Public source availability does not grant a blanket open-source or media licence. Project code and original content have no additional reuse licence granted at present; third-party components retain their own terms. See [third-party notices](THIRD_PARTY_NOTICES.md), [narration provenance](public/narration/NOTICE.md) and [music provenance](public/music/NOTICE.md).
+## License
+
+Trazolino's own code is released under the MIT License (see the [LICENSE](LICENSE) file). You are free to use, modify, and distribute this code under the terms of the MIT License.
+
+However, Trazolino depends on third-party components that have their own licenses:
+
+- **tldraw** (version 5.5.2): The drawing SDK uses the [tldraw license](public/tldraw/LICENSE.md), which is a proprietary license. Anyone deploying Trazolino for production use must obtain their own tldraw license key. For licensing options and requirements, see the [tldraw licensing documentation](https://tldraw.dev/community/license).
+- Other third-party components retain their own terms. See [third-party notices](THIRD_PARTY_NOTICES.md), [narration provenance](public/narration/NOTICE.md), and [music provenance](public/music/NOTICE.md).
