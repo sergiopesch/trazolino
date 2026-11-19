@@ -1,7 +1,7 @@
 {
   "status": "assistant-authored-awaiting-native-human-review",
   "source": "src/about-copy.json",
-  "sha256": "3dff42d6982ceb397f0153ca44bf4d921ad127a7482a2472445aff709ae7fccb",
+  "sha256": "6c03d1296711ffb86ec7cab7a33081c9382373ef778ea6c934753c6692582d51",
   "scope": "Founder story and navigation only. Preserve first-person voice, paper-first drawing, nine-language availability, Venezuelan roots, open source nature, and Christmas/future plans. English voice variants share the English text. No lesson or narration changes.",
   "review": "Assistant editorial pass against the English source and locale guides. English text uses exact owner wording. Translated content maintains conversational register per locale conventions. Browser review and responsive regression evidence remain pending. Native-language review remains pending."
 }
