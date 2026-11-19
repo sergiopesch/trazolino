@@ -77,13 +77,23 @@ export default defineConfig(({ command, mode }) => {
         "Permissions-Policy": "microphone=(), camera=(), geolocation=()",
         "Referrer-Policy": "no-referrer",
         "X-Content-Type-Options": "nosniff",
-        "Content-Security-Policy": `default-src 'self'; script-src 'self' https://static.cloudflareinsights.com 'nonce-${previewNonce}'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com ws://127.0.0.1:* ws://localhost:*; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'`,
+        "Content-Security-Policy": `default-src 'self'; script-src 'self' 'nonce-${previewNonce}'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' ws://127.0.0.1:* ws://localhost:*; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'`,
       },
       allowedHosts: ["terminal.local"],
       warmup: {
         clientFiles: ["./src/main.jsx"],
       },
     },
-    plugins: [react(), startupBudgetPlugin()],
+    plugins: [
+      react(),
+      startupBudgetPlugin(),
+      // Count production page views only: local dev and browser tests never load the beacon.
+      {
+        name: "cloudflare-beacon-production-only",
+        apply: "serve",
+        transformIndexHtml: (html) =>
+          html.replace(/\s*<script defer src="https:\/\/static\.cloudflareinsights\.com\/[^>]*><\/script>/, ""),
+      },
+    ],
   };
 });
