@@ -52,7 +52,7 @@ The released catalogues have passed automated source, coverage and audio-integri
 
 An adult must stay with the child throughout the session. The acknowledgement is a local declaration; it does not verify identity or continuous supervision.
 
-The application has no microphone or camera capture, uploads, child accounts, advertising, analytics integrations or stored child profiles. It cannot see or evaluate the paper drawing. Prepared media is played locally in the browser after download; no live AI or generation service runs during a lesson. The hosting provider still handles ordinary web requests and its operational logs.
+The application has no microphone or camera capture, uploads, child accounts, advertising or stored child profiles. The only measurement is Cloudflare Web Analytics, which counts page views anonymously without cookies or personal data. It cannot see or evaluate the paper drawing. Prepared media is played locally in the browser after download; no live AI or generation service runs during a lesson. The hosting provider still handles ordinary web requests and its operational logs.
 
 Application code controls the authored sequence. Voice recordings have no authority to change settings or decide whether a child is ready. Practice windows are adjustable teaching choices, and the family can always pause or add time.
 

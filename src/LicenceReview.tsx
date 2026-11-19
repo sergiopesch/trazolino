@@ -218,8 +218,9 @@ export function SiteEntry() {
             </li>
           </ul>
           <p className="review-privacy">
-            No app analytics. The hosting provider receives ordinary connection
-            metadata. This prototype has not been validated in a child-learning
+            We count page views anonymously with Cloudflare Web Analytics, with
+            no cookies or personal data. The hosting provider receives ordinary
+            connection metadata. This prototype has not been validated in a child-learning
             study.
           </p>
         </div>
