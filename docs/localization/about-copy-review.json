@@ -1,7 +1,7 @@
 {
   "status": "assistant-authored-awaiting-native-human-review",
   "source": "src/about-copy.json",
-  "sha256": "c1333fd7bbffbbfdabd84ecdc8641df08cdafddad5ae0206f3162586e7eebec9",
-  "scope": "Founder story and navigation only. Preserve first-person voice, paper-first drawing, free work-in-progress status and Venezuelan roots. English voice variants share the English text. No lesson or narration changes.",
-  "review": "Assistant editorial pass against the English source and locale guides. Browser review and responsive regression evidence are documented in docs/design/multilingual-ui-audit.md. Native-language review remains pending."
+  "sha256": "3dff42d6982ceb397f0153ca44bf4d921ad127a7482a2472445aff709ae7fccb",
+  "scope": "Founder story and navigation only. Preserve first-person voice, paper-first drawing, nine-language availability, Venezuelan roots, open source nature, and Christmas/future plans. English voice variants share the English text. No lesson or narration changes.",
+  "review": "Assistant editorial pass against the English source and locale guides. English text uses exact owner wording. Translated content maintains conversational register per locale conventions. Browser review and responsive regression evidence remain pending. Native-language review remains pending."
 }
