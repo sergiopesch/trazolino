@@ -15,7 +15,10 @@ export function Privacy({ onClose }: { onClose: () => void }) {
       <ul className="privacy-list">
         <li>{t("Your child draws on paper. This website cannot see or judge it.")}</li>
         <li>
-          {t("No microphone, camera, uploads, accounts, advertising, app analytics or child profiles.")}
+          {t("No microphone, camera, uploads, accounts, advertising or child profiles.")}
+        </li>
+        <li>
+          {t("We count page views anonymously with Cloudflare Web Analytics, with no cookies or personal data.")}
         </li>
         <li>
           {t("Your lesson choice and settings stay in this page’s memory and reset on reload.")}

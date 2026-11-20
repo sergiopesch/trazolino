@@ -84,6 +84,16 @@ export default defineConfig(({ command, mode }) => {
         clientFiles: ["./src/main.jsx"],
       },
     },
-    plugins: [react(), startupBudgetPlugin()],
+    plugins: [
+      react(),
+      startupBudgetPlugin(),
+      // Count production page views only: local dev and browser tests never load the beacon.
+      {
+        name: "cloudflare-beacon-production-only",
+        apply: "serve",
+        transformIndexHtml: (html) =>
+          html.replace(/\s*<script defer src="https:\/\/static\.cloudflareinsights\.com\/[^>]*><\/script>/, ""),
+      },
+    ],
   };
 });

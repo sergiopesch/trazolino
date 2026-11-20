@@ -6,11 +6,32 @@ import { securityHeaders } from "../config/security.js";
 import { REVIEW_STAGES } from "../src/review-tour.js";
 import { sha256 } from "../scripts/release-metadata.mjs";
 
+// The only third-party script is Cloudflare Web Analytics: anonymous page views, no cookies.
+const beacon = "https://static.cloudflareinsights.com/beacon.min.js";
+const externalScripts = (document) => [...document.matchAll(/<script[^>]+src="(https?:[^"]+)"/g)].map(([, src]) => src);
+
+test("both pages load the Cloudflare Web Analytics beacon once, with the public site token", async () => {
+  for (const page of ["index.html", "about/index.html"]) {
+    const document = await readFile(new URL(`../dist/client/${page}`, import.meta.url), "utf8");
+    assert.deepEqual(externalScripts(document), [beacon], page);
+    assert.match(document, /<script defer src="https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js" data-cf-beacon='\{"token": "4800289fecb04cebad8c9bf7ba03b0d1"\}'[^>]*><\/script>/, page);
+  }
+});
+
+test("the Content-Security-Policy admits only the beacon script host and its reporting host", () => {
+  const policy = Object.fromEntries(securityHeaders["Content-Security-Policy"].split("; ").map(d => [d.split(" ")[0], d.split(" ").slice(1)]));
+  assert.deepEqual(policy["script-src"], ["'self'", "https://static.cloudflareinsights.com"]);
+  assert.deepEqual(policy["connect-src"], ["'self'", "https://cloudflareinsights.com"]);
+  for (const [name, sources] of Object.entries(policy)) {
+    if (name !== "script-src" && name !== "connect-src") assert.ok(!sources.some(s => s.includes("cloudflare")), name);
+  }
+});
+
 test("About ships a readable static fallback with local styles and a bounded translation module", async () => {
   const document = await readFile(new URL("../dist/client/about/index.html", import.meta.url), "utf8");
   assert.match(document, /<html lang="en-GB">/);
   assert.match(document, /<script[^>]+src="\/assets\/about-[^"]+\.js"/);
-  assert.doesNotMatch(document, /<script[^>]+src="https?:/);
+  assert.deepEqual(externalScripts(document), [beacon]);
   assert.match(document, /<title>About — Trazolino<\/title>/);
   assert.match(document, /Sergio Peschiera/);
   assert.match(document, /href="https:\/\/trazolino.org\/about\/"/);
